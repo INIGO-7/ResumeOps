@@ -1,0 +1,114 @@
+%-------------------------------------------------------------------------------
+% ResumeOps LaTeX cover letter template
+%
+% Deliberately matched to resume-template.tex: same fonts, same link colour, same
+% header treatment, so the CV and the letter read as one pair of documents.
+%
+% Content rules (paragraph structure, voice, length) live in
+% ../cover-letter-preferences.md. Typography rules live in template-preferences.md.
+%
+% Everything in <ANGLE BRACKETS> is a placeholder to replace. Delete the date and
+% company block if the letter is being pasted into a web form instead of sent.
+%
+% Build: pdflatex cover-letter.tex   (twice, if links are added)
+%-------------------------------------------------------------------------------
+
+\documentclass[letterpaper,10pt]{article}   % 11pt if the letter runs short
+
+\usepackage[empty]{fullpage}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\definecolor{linkblue}{RGB}{0,0,139}
+\hypersetup{colorlinks=true, urlcolor=linkblue, linkcolor=linkblue, citecolor=linkblue}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}                 % spanish, when drafting in Spanish
+\usepackage{cmap}          % parsable text layer (must load before fontenc)
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{helvet}        % header name only
+\input{glyphtounicode}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\setlength{\footskip}{12pt}   % silences fancyhdr's \footskip warning
+
+% Roomier than the CV: a letter breathes, a CV does not.
+\addtolength{\oddsidemargin}{-0.35in}
+\addtolength{\evensidemargin}{-0.35in}
+\addtolength{\textwidth}{0.7in}
+\addtolength{\topmargin}{-0.55in}
+\addtolength{\textheight}{1.1in}
+
+\urlstyle{same}
+\raggedright
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{9pt}     % paragraph spacing instead of indents
+\linespread{1.12}
+
+\pdfgentounicode=1            % keep: this is what makes the PDF text extractable
+
+%-------------------------------------------------------------------------------
+\begin{document}
+
+%----------HEADER----------
+% Same identity block as the CV header, minus the icons — a letter is prose, and
+% stray glyphs in the text layer are not worth the visual echo.
+\begin{center}
+    {\sffamily\bfseries\LARGE <FULL NAME>} \\ \vspace{4pt}
+    \small <CITY, COUNTRY> \quad $|$ \quad <+PHONE> \quad $|$ \quad
+    \href{mailto:<EMAIL>}{\underline{<EMAIL>}} \quad $|$ \quad
+    \href{https://www.linkedin.com/in/<HANDLE>/}{\underline{LinkedIn}}
+\end{center}
+\vspace{6pt}
+\hrule
+\vspace{14pt}
+
+%----------DATE + RECIPIENT----------
+% Delete this whole block when pasting the letter into an application form.
+<DD MONTH YYYY>
+
+\vspace{-4pt}
+<COMPANY NAME> \\
+<CITY, COUNTRY>
+
+%----------SALUTATION----------
+% Name the hiring manager when the JD gives one; otherwise "Dear Hiring Team,".
+Dear <HIRING MANAGER / Hiring Team>,
+
+%----------1. HOOK----------
+% Role + where seen, then the single strongest reason this candidate fits THIS
+% posting. Specific and concrete. Never "I am writing to apply for".
+<OPENING: the role by its exact title, and the one fact that makes the fit
+obvious — a system owned, a domain, a number.>
+
+%----------2. PROOF----------
+% One or two achievements from knowledge/generated/4-achievement-bank.md, told as
+% stories rather than re-cut CV bullets: problem, decision, outcome.
+<ACHIEVEMENT ONE: the problem, what was decided and built, what changed as a
+result — with the metric if one exists in knowledge/.>
+
+<ACHIEVEMENT TWO (optional): a second dimension the JD asks for — scale,
+reliability, collaboration, research depth.>
+
+%----------3. FIT----------
+% Why this company specifically: their product, domain, stack or public work, and
+% how the candidate's direction meets it. If nothing true and specific can be
+% said here, ask the user rather than padding it.
+<WHY THIS COMPANY: something concrete about them, joined to what the candidate is
+deliberately moving towards.>
+
+%----------4. CLOSE----------
+% Hard constraints the recruiter must know, then a plain sign-off.
+<CLOSE: location / work authorisation / notice period if relevant, and a direct,
+unbegging final sentence.>
+
+\vspace{10pt}
+Sincerely, \\[6pt]     % "Kind regards," for a warmer or European register
+<FULL NAME>
+
+%-------------------------------------------------------------------------------
+\end{document}

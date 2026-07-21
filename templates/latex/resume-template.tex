@@ -1,0 +1,276 @@
+%-------------------------------------------------------------------------------
+% ResumeOps LaTeX template
+% Based on Jake Gutierrez's resume template (MIT) / sb2nov
+%
+% Section order (fixed — see template-preferences.md):
+%   Summary -> Skills (Keywords + Technical Skills) -> Experience -> Awards
+%   -> Projects -> Education -> Languages
+%
+% Everything in <ANGLE BRACKETS> is a placeholder to replace. Delete any
+% section that has no backing fact in knowledge/ rather than padding it.
+%
+% Build: pdflatex resume.tex   (twice, if links/refs are added)
+%-------------------------------------------------------------------------------
+
+\documentclass[letterpaper,9pt]{extarticle}   % 10pt/11pt if content is sparse
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\definecolor{linkblue}{RGB}{0,0,139}          % dark blue: readable in print
+\hypersetup{colorlinks=true, urlcolor=linkblue, linkcolor=linkblue, citecolor=linkblue}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{cmap}          % copy/paste- and ATS-parsable text layer (before fontenc)
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}       % unicode-mapped ligatures (fi, ffi, ...)
+\usepackage{helvet}        % clean sans, used only for the header name
+\usepackage{fontawesome5}  % header icons (phone, email, github, linkedin)
+\input{glyphtounicode}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Margins — tightened to fit a dense one-pager. Relax these before shrinking
+% the font any further.
+\addtolength{\oddsidemargin}{-0.6in}
+\addtolength{\evensidemargin}{-0.6in}
+\addtolength{\textwidth}{1.19in}
+\addtolength{\topmargin}{-.62in}
+\addtolength{\textheight}{1.57in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+\linespread{1.15}          % a touch more leading between wrapped lines
+
+% Section headings: small caps + rule underneath
+\titleformat{\section}{
+  \vspace{-7pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-6pt}]
+
+% Make the generated PDF machine readable / ATS parsable
+\pdfgentounicode=1
+
+%-------------------------------------------------------------------------------
+% Custom commands
+%-------------------------------------------------------------------------------
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-1.5pt}}
+  }
+}
+
+% Generic 4-field heading: {left top}{right top}{left bottom}{right bottom}
+% Used for Education (institution / location / degree / dates).
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-1pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+% Experience/Awards heading, one line:
+% {Company}{Role}{Dates}{Location}
+\newcommand{\resumeExpHeading}[4]{
+  \vspace{1pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} {\normalfont\small$\vert$} \textbf{\textit{#2}} & {\small \textit{#3} $\vert$ #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+% Second role at the same employer: {Role}{Dates}
+\newcommand{\resumeSubSubheading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textit{\small#1} & \textit{\small #2} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+% Project heading: {Name (+ context)}{Stack or dates}
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & #2 \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-3pt}}
+
+%-------------------------------------------------------------------------------
+%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-------------------------------------------------------------------------------
+
+\begin{document}
+
+%----------HEADING----------
+\begin{center}
+    {\sffamily\bfseries\LARGE <FULL NAME>} \\ \vspace{4pt}
+    \small
+    \faPhone* \ <+PHONE> \quad $|$ \quad
+    \faEnvelope[regular] \ \href{mailto:<EMAIL>}{\underline{<EMAIL>}} \quad $|$ \quad
+    \faGithub \ \href{https://github.com/<HANDLE>}{\underline{GitHub}} \quad $|$ \quad
+    \faLinkedin \ \href{https://www.linkedin.com/in/<HANDLE>/}{\underline{LinkedIn}}
+    % Optional, only when relevant to the target: \quad $|$ \quad <CITY, COUNTRY>
+\end{center}
+% Icon-free fallback header. The fontawesome glyphs above extract as stray
+% characters ("§ GitHub") in pdftotext; harmless, since the label follows, but
+% swap to this for a strict ATS portal:
+% \begin{center}
+%     {\sffamily\bfseries\LARGE <FULL NAME>} \\ \vspace{4pt}
+%     \small <+PHONE> $|$ \href{mailto:<EMAIL>}{\underline{<EMAIL>}} $|$
+%     \href{https://github.com/<HANDLE>}{\underline{github.com/<HANDLE>}} $|$
+%     \href{https://www.linkedin.com/in/<HANDLE>/}{\underline{linkedin.com/in/<HANDLE>}}
+% \end{center}
+\vspace{-12pt}
+
+%-----------SUMMARY-----------
+% 3-5 lines. Who you are, the level you operate at, the 2-3 things this JD
+% cares about most, and any hard constraint the recruiter must know (location,
+% visa, notice). Bold sparingly — only the phrases you want scanned.
+\section{Summary}
+\vspace{2pt}
+\small{<ROLE TITLE> who <CORE DIFFERENTIATOR IN THE JD'S OWN LANGUAGE>. <ONE
+SENTENCE ON HOW YOU WORK — ownership, first principles, business outcomes>.
+<ONE SENTENCE ON DOMAIN DEPTH RELEVANT TO THIS JD>. <CREDENTIALS: degrees,
+years of experience>. <CONSTRAINT / INTENT: relocation, work authorisation,
+availability>.}
+\vspace{-2pt}
+
+%-----------SKILLS-----------
+% Two blocks in one section:
+%  - Keywords: a flat, comma-separated ATS harvest line. Terms lifted verbatim
+%    from the JD, every one of which must be true and evidenced in knowledge/.
+%  - Technical Skills: the human-readable, grouped view. Reorder the groups so
+%    the one the JD leads with comes first.
+\section{Skills}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \footnotesize{\item{
+     \textbf{Keywords}{: <JD TERM 1>, <JD TERM 2>, <JD TERM 3>, <JD TERM 4>,
+     <JD TERM 5>, <JD TERM 6>, <JD TERM 7>, <JD TERM 8>, <JD TERM 9>,
+     <JD TERM 10>, <JD TERM 11>, <JD TERM 12>.} \\[2pt]
+     \textbf{Languages}{: <LANGUAGE> (<N>+ yrs), <LANGUAGE>, <LANGUAGE>} \\
+     \textbf{<GROUP 2 — e.g. Systems \& Infrastructure>}{: <TOOL>, <TOOL>, <TOOL>, <TOOL>} \\
+     \textbf{<GROUP 3 — e.g. ML \& Generative AI>}{: <TOOL>, <TOOL>, <TOOL>, <TOOL>} \\
+     \textbf{<GROUP 4 — e.g. Evaluation \& Efficiency>}{: <TOOL>, <TOOL>, <TOOL>, <TOOL>} \\
+     \textbf{<GROUP 5 — e.g. Tooling \& Observability>}{: <TOOL>, <TOOL>, <TOOL>, <TOOL>}
+    }}
+ \end{itemize}
+\vspace{-4pt}
+
+%-----------EXPERIENCE-----------
+% Reverse chronological. 3-5 bullets for the most relevant role, 1-2 for the
+% rest. Every bullet: action -> what you built -> measured outcome.
+\section{Experience}
+  \resumeSubHeadingListStart
+
+    \resumeExpHeading
+      {<COMPANY>}{<ROLE TITLE>}{<MON YYYY> -- <MON YYYY / Present>}{<LOCATION>}
+      \resumeItemListStart
+        \resumeItem{\textbf{<HEADLINE ACHIEVEMENT>} — <what you owned and built>, <METRIC: from X to Y / N hours saved / N\% faster>.}
+        \resumeItem{<Second achievement: the system, the hard technical choice, and why it mattered to the business>.}
+        \resumeItem{<Third achievement: the stack in the JD's vocabulary, used in anger>.}
+        \resumeItem{<Fourth achievement: reliability, scale, evaluation, or collaboration signal>.}
+      \resumeItemListEnd
+
+    \vspace{3pt}
+
+    \resumeExpHeading
+      {<COMPANY>}{<ROLE TITLE>}{<MON YYYY> -- <MON YYYY>}{<LOCATION>}
+      \resumeItemListStart
+        \resumeItem{<Achievement with outcome>.}
+        \resumeItem{<Achievement with outcome>.}
+      \resumeItemListEnd
+
+    % Two roles at the same employer — keep one \resumeExpHeading, then:
+    % \resumeSubSubheading{<EARLIER ROLE TITLE>}{<MON YYYY> -- <MON YYYY>}
+    % \resumeItemListStart
+    %   \resumeItem{<Achievement>.}
+    % \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+\vspace{-4pt}
+
+%-----------AWARDS-----------
+% Only awards with a real selection bar. State the bar (field size, ranking)
+% and link the proof. Drop the section entirely if there is nothing to show.
+\section{Awards}
+  \resumeSubHeadingListStart
+
+    \resumeExpHeading
+      {\underline{<AWARD NAME>}}{\href{<PROOF URL>}{\underline{<link text>}}}{<MON YYYY>}{<LOCATION>}
+      \resumeItemListStart
+      \vspace{3pt}
+        \resumeItem{<What the competition was, the selection bar (\textbf{N candidates / M institutions}), what you built, and the trait it demonstrates>.}
+      \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+\vspace{-3pt}
+
+%-----------PROJECTS-----------
+% Thesis work, research, and side projects that show depth the jobs don't.
+% Stack goes on the right; keep it to one dense bullet each.
+\section{Projects <\& Research>}
+    \resumeSubHeadingListStart
+
+      \resumeProjectHeading
+          {\textbf{<PROJECT NAME>} (<CONTEXT: thesis, research, OSS>)}{\small\emph{<STACK>}}
+          \resumeItemListStart
+            \resumeItem{<What problem, what you built, what constraint made it hard, and the result — with a \href{<URL>}{\underline{link}} if there is one>.}
+          \resumeItemListEnd
+
+      \vspace{3pt}
+
+      \resumeProjectHeading
+          {\textbf{<PROJECT NAME>} (<CONTEXT>)}{\small\emph{<STACK>}}
+          \resumeItemListStart
+            \resumeItem{<What problem, what you built, and the measured result>.}
+          \resumeItemListEnd
+
+    \resumeSubHeadingListEnd
+\vspace{-5pt}
+
+%-----------EDUCATION-----------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {<INSTITUTION>}{<CITY, COUNTRY>}
+      {<DEGREE>}{<MON YYYY> -- <MON YYYY>}
+    \resumeSubheading
+      {<INSTITUTION>}{<CITY, COUNTRY>}
+      {<DEGREE>}{<MON YYYY> -- <MON YYYY>}
+  \resumeSubHeadingListEnd
+\vspace{-2pt}
+
+%-----------LANGUAGES-----------
+% Rename to "Certifications \& Languages" if certifications are worth the space.
+\section{Languages}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{<LANGUAGE>} (<Native>); \textbf{<LANGUAGE>} (<Fluent / C1 — evidence>);
+     \textbf{<LANGUAGE>} (<Basic — evidence>).
+    }}
+ \end{itemize}
+
+%-------------------------------------------------------------------------------
+\end{document}

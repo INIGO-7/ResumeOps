@@ -1,0 +1,48 @@
+# ResumeOps configuration
+#
+# Switches only. Read this file before drafting, tailoring or rendering anything — it
+# decides how the machinery behaves, never what is true about the candidate. Every fact
+# about the candidate lives in knowledge/; identity and contact details in particular
+# live in knowledge/generated/1-identity-and-constraints.md and are never restated here.
+#
+# Precedence: an explicit instruction in the conversation beats this file. This file
+# beats any default behaviour.
+
+drafting:
+  # Language the CV is written in.
+  #   match-jd  — detect the job description's language and draft in it
+  #   en / es   — force that language regardless of the JD
+  language: match-jd
+
+  # Used when language is match-jd and the JD's language is absent or ambiguous.
+  fallback_language: en
+
+  # Rendering backend: latex | html. Selects the templates/<backend>/ directory whose
+  # resume-template.* and template-preferences.md are used.
+  default_template: latex
+
+  # Whether /apply also produces a cover letter.
+  #   always — draft one for every application
+  #   ask    — ask once per application
+  #   never  — CV only
+  cover_letter: always
+
+guardrails:
+  # Hard ceiling on page count. The master preferences allow two pages only with 8+
+  # years of relevant experience; this is the absolute cap regardless.
+  max_pages: 1
+
+  # What to do when the JD asks for something with no backing in knowledge/.
+  #   ask   — stop and ask the user (never infer, never inflate)
+  #   omit  — silently leave it off the CV
+  missing_evidence: ask
+
+  # Whether facts learned while tailoring are written back into knowledge/ without
+  # being asked. When true, say which file was updated.
+  auto_write_back_to_knowledge: true
+
+output:
+  # Filename patterns for rendered documents. Placeholders resolve from knowledge/ and
+  # from the application being targeted: <Name>, <Role>, <Company>, <YYYY-MM>.
+  filename: CV_<Name>_<Role>.pdf
+  cover_letter_filename: CoverLetter_<Name>_<Role>.pdf

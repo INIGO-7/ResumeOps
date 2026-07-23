@@ -19,6 +19,42 @@ the `template-preferences.md` of the backend in `drafting.default_template`.
 
 ## 0. Preflight
 
+### Re-opening an existing application — the cv-sync drift check
+
+**Before anything else, decide whether this is a re-open.** If the target application
+folder already contains a `cv.*` (`cv.tex` or `cv.html`), this application was drafted in
+an earlier conversation and its CV may now carry claims that `knowledge/generated/` has
+since corrected — a metric later refined, a role reworded, an achievement edited. Run the
+drift check **before any further edits**, so the candidate is never revising on top of
+stale facts. A **brand-new** application (folder doesn't exist yet, or has no `cv.*`)
+**skips this entirely** — there is nothing drafted to drift.
+
+Spawn a **fresh subagent in its own context** to do the comparison — keep it out of the
+main conversation so re-opening stays cheap and unbloated. Use the general-purpose Task
+agent, model **Opus 4.8 at low reasoning effort**. Hand it exactly two inputs and one job:
+
+- **Inputs:** the application's CV source (`cv.tex`/`cv.html`; it may also read the
+  extracted `pdftotext` layer if useful) and the whole of `knowledge/generated/`.
+- **Job:** a semantic comparison — not a regex. For every factual claim on the CV, find
+  the corresponding fact in the store and judge whether the CV wording still matches the
+  store's **current** value. This is deliberately an LLM judgement call, mirroring the
+  decision not to build a mechanical fact-matcher.
+- **Output contract:** a list of edits, each `{file, old_string, new_string, reason}` —
+  `file` is the application CV source, `old_string` the exact stale CV wording,
+  `new_string` the store-correct value, `reason` names what changed in the store. Empty
+  list if nothing drifted. (Same shape as the fresh-context reviewer in the *Smarter
+  drafting loop* spec — keep the two contracts identical so a future refactor can share
+  the seam.)
+
+Then **surface every finding to the candidate and apply nothing without explicit
+confirmation.** A "drifted" claim is not always a mistake — it may be a deliberate
+tailoring reframe chosen for this posting. Show each edit (file, current wording, store
+value, what changed) and let the candidate approve or keep the current wording one edit at
+a time. Apply the approved edits mechanically to the CV source; leave the rest untouched.
+Only after this reconciliation does the normal preflight and any further drafting proceed.
+
+### Store readiness
+
 **The knowledge store must be populated.** Check:
 
 ```

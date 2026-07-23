@@ -302,25 +302,50 @@ Also produce a **plain-text version** of the letter body in `cover-letter.md` �
 application forms take a text box, not an attachment, and reformatting a PDF by hand at
 submission time is where the typos come from.
 
-## 6. Critique — put on the recruiter hat
+## 6. Critique — a fresh recruiter who never saw the drafting
 
-Do not skip this because the draft reads well. Take the CV critique role from the parent
-`CLAUDE.md`: a hard-to-impress recruiter for this exact role at a top company in the
-domain, who rejects most CVs in fifteen seconds.
+Do not skip this because the draft reads well. The critique that matters is the one from
+someone who **did not draft the CV** — the drafter rationalises its own generic phrasing
+because it already knows what was meant. So this pass does not run in this conversation.
 
-Write `review.md`, and be specific rather than kind:
+**Spawn a fresh subagent in its own context** to do the critique — the general-purpose
+Task agent, model **Opus 4.8 at medium reasoning effort**. It has never seen the drafting,
+so it reads the page the way a recruiter does: only what is actually on it. Hand it the
+recruiter persona, a fixed set of inputs, and one job.
 
-- The fifteen-second verdict: reading top-down, does the fit land before the fold?
-- The three weakest lines on the page, quoted, with why each is weak — unquantified,
-  generic, or a responsibility posing as an achievement.
-- What the JD asks for that the CV fails to show even though `knowledge/` has it. This is
-  the most common and most fixable failure.
-- What a recruiter would probe or doubt in a screen: a gap, a short tenure, a claim that
-  sounds inflated, a keyword with thin backing.
-- The cover letter: does it say anything the CV could not?
+- **Persona:** the CV critique role from the parent `CLAUDE.md` — a hard-to-impress
+  recruiter for this exact role at a top company in the domain, who rejects most CVs in
+  fifteen seconds. Harsh, specific, on the side of the candidate's success.
+- **Inputs, and nothing else:** the JD (`jd.md`), the drafted `cv.tex`/`cv.html` (it may
+  also read the extracted `pdftotext` layer if useful) and the drafted `cover-letter.tex`,
+  and the whole of `knowledge/generated/`. **No web access** — the subagent must not fetch
+  anything; its judgement stays grounded in the posting and the store. Do not hand it this
+  conversation's drafting reasoning; the point is that it never saw it.
+- **Job:** critique the CV and cover letter as a recruiter would, covering at least —
+  - the fifteen-second verdict: reading top-down, does the fit land before the fold?
+  - the weakest lines on the page, quoted, with why each is weak — unquantified, generic,
+    or a responsibility posing as an achievement;
+  - what the JD asks for that the CV fails to show even though `knowledge/generated/` has
+    it — the most common and most fixable failure;
+  - what a recruiter would probe or doubt in a screen: a gap, a short tenure, a claim that
+    sounds inflated, a keyword with thin backing;
+  - the cover letter: does it say anything the CV could not?
+- **Output contract:** a written critique **plus** a list of concrete edits, each
+  `{file, old_string, new_string, reason}` — `file` is the drafted CV or cover-letter
+  source, `old_string` the exact current wording, `new_string` the sharper replacement,
+  `reason` the recruiter's rationale. Every proposed edit must be a **reframe of a fact
+  already in `knowledge/generated/`**, never a new claim. Empty edit list if the draft
+  needs none. (Same shape as the cv-sync drift check in the *Render integrity* spec — keep
+  the two contracts identical so a future refactor can share the seam.)
 
-Then apply the fixes worth applying and note what was deliberately left alone and why.
-One critique pass, applied, is worth more than three drafts.
+When the subagent returns, write its critique into `review.md` — the persisted recruiter
+verdict, preserving its substance rather than softening it — then **apply its edits
+mechanically** to the CV and cover-letter source: a straight `old_string`→`new_string`
+substitution, no re-drafting, no drift. Apply them all; the only edit to decline is one
+that breaks the output contract above — a `new_string` that smuggles in a claim not backed
+by `knowledge/generated/`, or that overrides a deliberate tailoring choice from step 2/3.
+Note any you decline in `review.md` with the reason. One critique pass, applied, is worth
+more than three drafts.
 
 ## 7. Write back and record preferences
 

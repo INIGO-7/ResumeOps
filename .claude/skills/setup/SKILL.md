@@ -30,20 +30,38 @@ Five steps, in order. Do not skip ahead: the interview in step 5 is only worth t
 time once the documents have been mined, and asking about something already written in a
 document they handed over is the fastest way to waste their patience.
 
+**This skill is idempotent — a second run is a top-up, not a redo.** Before doing anything,
+take stock of what already exists:
+
+- **Which generated files are already populated** — those without the
+  `_(empty — run /setup to populate)_` sentinel. Their contents are kept and only added to,
+  never regenerated.
+- **Which raw documents are already ingested.** A file already in the
+  `<category>-<what-it-is>[-<year>]` naming convention was renamed and mined on a previous
+  run; a file still bearing an arbitrary name (`Documento1.pdf`, `CV_final.docx`) is new.
+  The rename is the ingestion marker.
+
+From that, pick the mode. A **first run** — sentinels everywhere, nothing renamed yet — is
+the full flow below. A **re-run** touches only the delta: rename and mine the new documents,
+merge their facts into the existing files, and interview only about gaps still open. If
+there are no new documents and no thin spots left, say so and stop — do not re-rename,
+re-mine or re-interview what is already done.
+
 ### 1. Present the repo — briefly
 
-Six lines at most, no headings, no bullet-point tour. What it is: a durable store of
-everything true about them, so a CV is never written from scratch again. What is about to
-happen: they dump documents, those documents get renamed and mined, and then a
-conversation fills the gaps. What they get: a knowledge store that every future
-application draws on.
+Two or three lines, no headings, no bullet tour: ResumeOps is a durable store of
+everything true about the candidate, filled once so a CV is never written from scratch
+again — every future application draws on it. Then move straight to step 2 in the same
+message. Do not wait for acknowledgement.
 
-Then move straight to step 2 in the same message. Do not wait for acknowledgement.
+On a re-run, skip the pitch entirely — one line ("topping up your store with the new
+documents") is enough, then straight to step 2.
 
 ### 2. Ask for the document dump
 
 Ask the user to drop everything they have into `knowledge/raw/`, in any format, in no
-order, with no thought about naming — that gets handled for them.
+order, with no thought about naming — that gets handled for them. On a re-run, ask only for
+what is new since last time; they need not re-add documents already in `knowledge/raw/`.
 
 Give them the prompt list, because people systematically forget most of these:
 
@@ -71,9 +89,10 @@ interview in step 5 carries the whole load — and go to step 5.
 
 ### 3. Propose the renames as one batch
 
-Once files are in `knowledge/raw/`, read enough of each to know what it actually is —
-never rename from the existing filename alone, which is usually `Documento1.pdf` or
-`CV_final_final.docx`.
+Consider only files not already in the naming convention — a file already conventioned was
+ingested on a previous run, so leave it untouched. For each of the rest, read enough to
+know what it actually is — never rename from the existing filename alone, which is usually
+`Documento1.pdf` or `CV_final_final.docx`.
 
 Propose every rename in a **single table** for one approve-or-adjust round: current name,
 proposed name, and a few words on what the file turned out to be. Target convention, from
@@ -97,11 +116,17 @@ Never edit the contents of a file in `raw/`. Renaming is the only permitted chan
 
 ### 4. Populate `knowledge/generated/`
 
-Read every file in `raw/`, then write the generated files.
+Read the existing generated files first, then the raw documents, then write. On a first run
+the generated files are empty and you write them fresh; on a re-run you fold the facts from
+the new documents into files that already hold content.
 
 - **Read each generated file's opening paragraphs before writing into it.** They state what
   belongs there and what belongs in a sibling instead. Route by them, and follow the
   "How to record it" format so files written in different sessions stay consistent.
+- **Merge, never clobber.** Preserve everything a generated file already holds — including
+  facts added through earlier conversations that appear in no raw document — and fold new
+  facts in alongside them. Add, deduplicate and correct; never regenerate a file from
+  scratch, and never drop a fact because you cannot see its source document on this run.
 - **Write long.** This is a store, not a CV. Compression happens at drafting time; a
   detail dropped here is gone for every future application.
 - **Every claim carries its source.** In `4-achievement-bank.md` that is the explicit
@@ -116,41 +141,52 @@ Read every file in `raw/`, then write the generated files.
 
 Then audit coverage, file by file, and write down what is missing or thin: a role with no
 achievements attached, an achievement with no number, a skill with no evidence, a date
-range with a gap in it, a `TODO — ask candidate`, an entirely empty file. That list is the
-agenda for step 5 — but it is an agenda, not a script.
+range with a gap in it, a `TODO — ask candidate`, an entirely empty file. Each gap becomes
+one specific question in step 5, so make the list concrete: not "role thin" but "Acme
+2020–2023 has no achievement recorded" — the wording of the gap is most of the wording of
+the question.
 
 ### 5. The interview
 
-Report what got populated and what is thin, then start asking.
+Report what got populated and what is thin, then work through the gap list from step 4 as
+specific, targeted questions — one per gap, one at a time.
 
-**Open-ended first.** Begin with the two files that unlock the others:
-`10-career-narrative.md` and `3-work-experience.md`. Ask the user to walk you through
-their career, then through each role in turn — what the job actually was, what they built,
-what was hard, what changed because they were there. Five minutes of someone talking about
-a job surfaces certifications, skills, awards, numbers and constraints all at once. Only
-once that vein is exhausted do you ask narrowly about what is still missing.
+**Specific, not general.** Each question names the exact hole and asks for exactly what is
+missing. A broad prompt like "walk me through your career" pushes all the sorting work onto
+the user and leaves them unsure what you actually need; a pointed question tells them
+precisely what to answer and takes a fraction of the effort. Compare:
 
-**Style — this is the part that determines how much you get:**
+- Instead of "tell me about your time at Acme" → "You have Acme listed from 2020–2023 but
+  no achievement recorded for it — what is one thing you shipped there that you are proud
+  of?"
+- Instead of "what are your skills" → "You mention Kubernetes in the Acme role but it is
+  not in the skills inventory — how would you rate it, and where did you use it?"
+- Instead of "any gaps in your history" → "There is a gap between the Acme role ending in
+  March 2023 and Globex starting in September 2023 — what were you doing then?"
+
+Order the gaps so the ones that unlock the most come first: usually a role in
+`3-work-experience.md` with no achievements attached, since one answer there often fills
+skills, numbers and narrative at once.
+
+**Style:**
 
 - **One question at a time.** Never a numbered list of questions, never a form.
-- **Ask for the story, not the field.** "Walk me through what the first six months at
-  Acme actually looked like" beats "what were your responsibilities at Acme". "Tell me
-  about the thing you built there that you are proudest of" beats "list your achievements".
-- **Invite the tangent.** Say plainly, more than once, that rambling is useful and that
-  detail they think is irrelevant is often the thing that ends up on the CV. Let them
-  overshare; sorting it is your job, not theirs.
-- **Follow the energy.** When they get animated about something, stay there and go
-  deeper. That is where the strongest material is.
-- **Chase the number, gently, and only after the story.** "Do you have a rough sense of
-  how much faster it got?" — and accept "no idea" without pushing. An approximate number
-  stays approximate: record it with `**Confidence:** approximate` and never round it into
-  something that looks precise.
-- **Reflect back.** Periodically restate what you heard as the achievement you intend to
-  record, and let them correct it. Corrections are information.
-- **Never ask what a document already answered.** It signals you did not read what they
-  gave you, and it is the fastest way to lose their patience.
-- **Narrow questions come last**, and only for genuine holes: exact dates, credential IDs,
-  spelling of a title, work authorisation, whether a client project is safe to name.
+- **Anchor every question to its gap.** Name the role, the file, the missing field, the
+  date. The user should never have to guess what you are after or do the categorising
+  themselves.
+- **Keep the answer bounded.** Ask for the one missing thing, not a general essay. If an
+  answer opens a richer vein than expected, follow it — but you open with the narrow
+  question, not a broad one.
+- **Chase the number, gently.** Where a gap needs a figure, ask for it directly — "roughly
+  how much faster did it get?" — and accept "no idea" without pushing. An approximate
+  number stays approximate: record it with `**Confidence:** approximate` and never round it
+  into something that looks precise.
+- **Reflect back.** Restate what you heard as the achievement or fact you intend to record,
+  and let them correct it. Corrections are information.
+- **Never re-ask what is already answered** — in a document they gave you or already
+  recorded in a generated file. It signals you did not read what you already have, and it is
+  the fastest way to lose their patience. On a re-run especially, only open gaps are on the
+  table.
 
 Write to the generated files **as you go**, not at the end — a long interview whose output
 is lost to a crash or a context limit is worse than no interview.
@@ -169,6 +205,8 @@ later. If you stop early, say exactly which files are still thin.
 Report:
 
 - which generated files are populated, and which are still empty or thin
+- on a re-run, which new documents were ingested and what they added — and if nothing new
+  was found, that the store was already up to date and nothing was changed
 - any `TODO — ask candidate` left in the files
 - any raw document you could not read
 - that facts learned in future conversations get written back automatically, so the store

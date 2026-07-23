@@ -4,6 +4,58 @@ Format-agnostic rules for drafting any CV in this repo. They apply whether the C
 rendered through `latex/` or `html/`. Anything about typography, spacing or layout
 mechanics belongs in the backend's own `template-preferences.md`, not here.
 
+## Anti-slop (Tier-1 — applies to every drafted document)
+
+This is the first rule, and it is non-negotiable. It governs **every document drafted in
+this repo — CV bullets, the summary, and the cover letter alike**, regardless of backend.
+Prose that trips any item below reads as machine-generated and gets a CV binned; rewrite
+it before rendering. A recruiter can smell "AI wrote this" in one line, and the moment
+they do, the candidate stops being a person and becomes a filtered-out template.
+
+**Banned openers (the AI-voice tell).** Never start a summary, bullet or cover-letter
+sentence with any of these:
+
+- "In today's fast-paced / ever-evolving / competitive world…", "In the world of…"
+- "As a seasoned / passionate / results-driven / dynamic professional…"
+- "I am writing to express my interest / to apply for…", "I am excited / thrilled /
+  eager to…", "I am confident that…", "I believe I would be a great fit…"
+- "Throughout my career / journey…", "With a proven track record of…"
+- Any sentence whose real content only starts at word ten.
+
+**Banned words and phrases** (buzzwords, hedges and empty intensifiers — cut them, or
+replace with the concrete fact they are standing in for):
+
+- Résumé clichés: results-driven, detail-oriented, self-starter, go-getter, team player,
+  hard-working, motivated, dynamic, proven track record, hit the ground running, wear
+  many hats, think outside the box, synergy, value-add, best-of-breed, world-class,
+  cutting-edge, state-of-the-art, next-level, game-changer, results-oriented.
+- AI-tic verbs and nouns: delve, leverage (as a verb), spearhead, showcase, underscore,
+  tapestry, testament, realm, landscape, ecosystem (unless literally an ecosystem),
+  robust, seamless, holistic, meticulous, passionate, thrilled, journey, unlock, elevate,
+  foster, harness, navigate (figuratively), embark.
+- Empty intensifiers and hedges: very, really, extremely, highly, truly, deeply,
+  incredibly, significantly, effectively, efficiently, successfully, various, numerous,
+  a range of, a variety of, in order to, needless to say, it is worth noting,
+  when it comes to.
+
+**Banned constructions:**
+
+- **Em-dashes (— or –) as sentence punctuation.** Use a comma, colon, parentheses, or two
+  sentences instead. (This rule binds drafted output only — these preference docs may keep
+  the house em-dash style.)
+- The **"not just X, but Y" / "it's not about X, it's about Y"** antithesis — the single
+  loudest AI tell.
+- Hollow **rule-of-three triads** ("fast, scalable, and reliable") where the three words
+  add no distinct fact.
+- "Furthermore / Moreover / Additionally" as sentence-openers; connect ideas or split them.
+- Sentences that state the candidate is passionate/excited/motivated instead of showing a
+  result that proves it.
+
+**The test:** every line must survive being read aloud by a skeptical human. If it sounds
+like a brochure, a LinkedIn "influencer" post, or a chatbot, it fails. Replace the slop
+with the specific, verifiable fact from `knowledge/` that it was padding over — concrete
+detail is the antidote to slop, never more adjectives.
+
 ## Section order
 
 Fixed, in this order. Skip a section entirely rather than padding it:

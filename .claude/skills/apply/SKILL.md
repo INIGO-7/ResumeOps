@@ -227,7 +227,31 @@ One critique pass, applied, is worth more than three drafts.
 
 ## 7. Write back and record preferences
 
-Both of these, before reporting done:
+All of these, before reporting done:
+
+- **The tracker.** Update `applications/tracker.md`, a single plain-markdown table at the
+  root of `applications/` indexing every application produced. Create it on first use if
+  absent, with this header:
+
+  ```markdown
+  # Applications
+
+  | Date | Company | Role | Fit | Link |
+  | --- | --- | --- | --- | --- |
+  ```
+
+  Then add exactly one row for this application:
+  - **Date** — month of application, the `<YYYY-MM>` from the folder name.
+  - **Company** / **Role** — as on the application.
+  - **Fit** — the overall `/100` score plus its verdict tier from `notes.md` (e.g.
+    `78/100 — strong`). If no fit score was computed, leave the cell blank rather than
+    inventing one.
+  - **Link** — a relative markdown link to the application folder, e.g.
+    `[folder](2026-07-acme-ml-engineer/)`.
+
+  The folder path is the key: if a row for this application's folder already exists (a
+  re-run), update that row in place — never append a duplicate. This is a pure index —
+  no status/outcome column and no calibration; do not add columns beyond the five above.
 
 - **New facts** surfaced in this application — anything the user said while filling a gap
   — go into the right `knowledge/generated/` file, per `auto_write_back_to_knowledge` in
@@ -248,9 +272,10 @@ Both of these, before reporting done:
 ## 8. Report
 
 Short. What was produced and where, the drafting language, the fit summary in a line or
-two, any requirement still unevidenced, and the files updated in `knowledge/` and
-`templates/`. Offer the next move — revise a section, adjust the angle, or a mock screen
-against this JD — rather than declaring the application finished.
+two, any requirement still unevidenced, the row added to `applications/tracker.md`, and
+the files updated in `knowledge/` and `templates/`. Offer the next move — revise a
+section, adjust the angle, or a mock screen against this JD — rather than declaring the
+application finished.
 
 ## Application folder, when done
 
@@ -265,3 +290,6 @@ applications/2026-07-acme-ml-engineer/
   CoverLetter_<Name>_<Role>.pdf
   review.md          # the recruiter critique and what was done about it
 ```
+
+Alongside the per-application folders, `applications/tracker.md` is a single index table
+spanning every application — one row each, maintained by step 7.

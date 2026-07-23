@@ -110,7 +110,8 @@ For `latex`:
 pdflatex -interaction=nonstopmode cv.tex && pdflatex -interaction=nonstopmode cv.tex
 ```
 
-Then verify, every time, no exceptions:
+Then run the **text-layer checks**, every time, no exceptions. These read the PDF as data —
+what the ATS sees — and none of them can see the page's layout:
 
 - **It compiled clean.** Grep the log for `^!` and for overfull boxes that push into the
   margin. A PDF that renders despite an error is the common failure, not the rare one.
@@ -121,9 +122,37 @@ Then verify, every time, no exceptions:
 - **The keyword check.** Confirm the harvested keywords actually appear in the extracted
   text. If a term only exists inside a graphic or a ligature-broken word, it is not there.
 
+### The visual-inspection loop (latex only)
+
+The checks above pass on a PDF whose text is correct but whose *layout* is broken — a
+heading stranded at the foot of a page, a role title split from its body, a lake of
+whitespace. The extractor cannot see any of it, so **Read the rendered `cv.pdf`** (the file
+tool renders the pages as images) and inspect it against this checklist:
+
+- **Page count** is within `guardrails.max_pages` — confirm visually, not only via `pdfinfo`.
+- **No orphaned heading.** No section heading, `\resumeExpHeading`, or `\resumeProjectHeading`
+  sits alone at the bottom of a page with its content pushed to the next.
+- **No split entry.** No `\cventry`/role title is separated from the first line of its body.
+- **No isolated heading** left dangling with nothing beneath it.
+- **No large whitespace pool** — no dead band of empty space mid-page or a page ending far
+  short of the others.
+- **No overfull box breaking into the margin** — text or rules running past the text block.
+
+On a defect, apply the **named rescue** for it from `templates/latex/template-preferences.md`
+("Visual-defect rescues") — `\needspace{N\baselineskip}` before an orphaned/isolated/split
+heading, `\enlargethispage` for a one-or-two-line near-miss overflow, and a content cut per
+the fitting order for a structural overflow or whitespace pool — then **recompile and Read
+the PDF again**. Fix one defect per pass so each rescue's effect is legible.
+
+**Cap the loop at 3 passes.** If the page is clean, proceed. If defects remain after the
+third pass, **stop** — do not ship silently and do not keep looping. Report the specific
+unresolved defects to the candidate (which heading, which page, what was tried), so they can
+decide between a further content cut and accepting the layout.
+
 For `html`, the export is the user's to run (Cmd/Ctrl-P → Save as PDF, background
 graphics on). Hand them the file and the export settings, then ask for the PDF back so
-the same extraction and page-count checks can run on it.
+the same extraction and page-count checks can run on it. The LaTeX rescue macros do not
+apply to the html backend — leave its export path untouched.
 
 Rename the final PDF per `output.filename` in `config.yml`, resolving `<Name>` from
 `knowledge/generated/1-identity-and-constraints.md` and `<Role>` from the JD's title.

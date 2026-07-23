@@ -80,6 +80,44 @@ whether they have something unrecorded that covers it. Often they do; it never m
 into the store. Whatever comes back gets written into `knowledge/generated/` first, then
 used. Never soften an absence into a claim, and never round a partial up to a strong.
 
+**Fit score — advisory, before any CV line.** Once the evidence map, keywords, angle, and
+gap batch are settled, score the match and write it into `notes.md`. This is a decision
+aid, not a gate: **a low score never blocks drafting** — it tells the candidate whether
+this posting is worth a full tailoring pass, and they keep the final say. Score five
+dimensions:
+
+| Dimension | Weight | Read from |
+|---|---|---|
+| Technical Skills | 30 | strong/weak areas **derived on the fly** from `5-skills-inventory.md` against the JD's ranked technical requirements — never a hand-maintained match list |
+| Experience Match | 25 | the evidence map above: how many ranked requirements land **strong** vs **partial** vs **absent**, weighted by rank |
+| Behavioral / Culture Fit | 15 | the JD's tone and stated ways-of-working against `10-career-narrative.md` → *How I work* and *Strengths and known gaps*. Assessed from the JD + store only, never from external reviews |
+| Career Alignment & Motivation | 30 | `10-career-narrative.md` → *Motivation*, *Career goals*, *Target roles and companies*, *Industries and cultures to avoid* against what this role actually is |
+| Location & Logistics | pass/fail (unweighted) | the JD's location, work model and relocation ask against `1-identity-and-constraints.md` → *Location and mobility* and *Deal-breakers* |
+
+Each weighted dimension is 0–100. **Location & Logistics** is pass/fail — it fails when the
+posting violates a hard deal-breaker or the recorded location/relocation stance; a fail is
+a red flag surfaced beside the score, not a subtraction from it. The weighted average of
+the four weighted dimensions gives **Overall /100**, with a verdict tier:
+
+- **Strong** 75+ — apply; a strong fit, worth a full pass.
+- **Good** 60–74 — apply; solid fit, tailor to close the softer gaps.
+- **Moderate** 45–59 — apply if motivated; expect to work harder to stand out.
+- **Weak** 30–44 — skip unless there's a specific reason (referral, reach role, strategic).
+- **Poor** <30 — skip; the store doesn't back this role.
+
+Write into `notes.md`: the five-dimension table (each score with a one-line
+justification), the weighted **Overall /100**, the **verdict tier**, **key strengths** (the
+dimensions and requirements carrying the score), **gaps** (the absent requirements and weak
+dimensions dragging it down), and a **1–2 sentence apply/skip recommendation**.
+
+**Honesty over a number.** Career Alignment and Location depend on recorded facts —
+*Motivation*, *Career goals*, *Deal-breakers*, *Location and mobility*. If one is still the
+empty sentinel (`_(empty — run /setup)_`) or genuinely silent on what the JD needs (e.g.
+the JD states a compensation floor the store never recorded), **do not invent a score for
+that dimension**: mark it *insufficient data*, name the missing input in `notes.md`, and
+drop it from the weighted average — renormalising the remaining weights — rather than
+guessing. A flagged missing input is worth more than a fabricated 70.
+
 ## 3. Draft the CV
 
 Copy the backend template into the application folder (`cv.tex` or `cv.html`) and fill it.
@@ -204,7 +242,7 @@ against this JD — rather than declaring the application finished.
 ```
 applications/2026-07-acme-ml-engineer/
   jd.md              # the posting, verbatim, with capture metadata
-  notes.md           # ranked requirements, evidence map, keywords, angle
+  notes.md           # ranked requirements, evidence map, keywords, angle, fit score
   cv.tex             # source, so the next revision is an edit not a rewrite
   CV_<Name>_<Role>.pdf
   cover-letter.tex

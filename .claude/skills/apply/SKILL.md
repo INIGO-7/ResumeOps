@@ -188,13 +188,14 @@ recruiter persona, a fixed set of inputs, and one job.
   needs none. (Same shape as the cv-sync drift check in the *Render integrity* spec — keep
   the two contracts identical so a future refactor can share the seam.)
 
-When the subagent returns, write its critique into `review.md` verbatim-in-substance (the
-persisted recruiter verdict), then **apply its edits mechanically** to the CV and
-cover-letter source — a straight `old_string`→`new_string` substitution, no re-drafting,
-no drift. Apply them all unless an edit would introduce a claim not backed by
-`knowledge/generated/` or contradicts a deliberate tailoring choice from step 2/3; note any
-you decline in `review.md` with the reason. One critique pass, applied, is worth more than
-three drafts.
+When the subagent returns, write its critique into `review.md` — the persisted recruiter
+verdict, preserving its substance rather than softening it — then **apply its edits
+mechanically** to the CV and cover-letter source: a straight `old_string`→`new_string`
+substitution, no re-drafting, no drift. Apply them all; the only edit to decline is one
+that breaks the output contract above — a `new_string` that smuggles in a claim not backed
+by `knowledge/generated/`, or that overrides a deliberate tailoring choice from step 2/3.
+Note any you decline in `review.md` with the reason. One critique pass, applied, is worth
+more than three drafts.
 
 ## 7. Write back and record preferences
 

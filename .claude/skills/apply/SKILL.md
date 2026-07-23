@@ -84,17 +84,19 @@ used. Never soften an absence into a claim, and never round a partial up to a st
 
 Copy the backend template into the application folder (`cv.tex` or `cv.html`) and fill it.
 Follow `master-template-preferences.md` for content — section order, bullet structure,
-summary shape, skills blocks, what never appears — and the backend file for mechanics.
+summary shape, skills groups, what never appears — and the backend file for mechanics.
 
 The three that decide whether the CV gets read:
 
-- **The summary** is the highest-leverage block on the page. It answers the JD's headline
-  requirement in the JD's own words, in the first sentence.
+- **The summary** is the highest-leverage block on the page. It presents the candidate —
+  profile, academic history, then intent capped with an extremely concise fit clause —
+  rather than reciting the JD's requirements back at the recruiter.
 - **Bullet selection is the tailoring.** Pick the achievements from
   `4-achievement-bank.md` that map to the ranked requirements, order them by that ranking
   rather than by how proud the candidate is of them, and reframe each in the JD's
   vocabulary. Reframing means the same fact, different emphasis — never a different fact.
-- **The keyword line** is the ATS harvest. Verbatim JD spelling, every term defensible.
+- **The skills groups** carry the ATS harvest: bold abilities, each listing its tools and
+  keywords in verbatim JD spelling, every term defensible.
 
 Cut to the page cap in `guardrails.max_pages` by cutting the weakest content first, per
 the backend's fitting order. A CV that fits by shrinking type has not been tailored, it

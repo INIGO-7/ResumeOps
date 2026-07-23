@@ -31,3 +31,17 @@ Read the master file plus the chosen backend's file before drafting or rendering
 - Preferences that are switches rather than prose (language, backend, page cap, write-back) belong in `config.yml`. Update it there instead of adding a duplicate rule elsewhere.  Anything true about the candidate — including name, contact details and constraints — is a fact, not a switch, and belongs in `knowledge/generated/`.
 - Capture preferences whenever they surface, in any conversation — not only while tailoring.  When the user states or corrects a CV preference, classify it and append it to the right file: format-agnostic → `templates/master-template-preferences.md`, format-specific → that backend's `template-preferences.md`, a fact about the candidate → `knowledge/`.  Mention the file you updated; if the classification is genuinely ambiguous, ask.
 
+## Agent skills
+
+### Issue tracker
+
+Issues and specs live as markdown files under `.scratch/<feature>/`. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Default canonical labels (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`). See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: `CONTEXT.md` + `docs/adr/` at the repo root. See `docs/agents/domain.md`.
+

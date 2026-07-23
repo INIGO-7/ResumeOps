@@ -47,7 +47,16 @@ parseable", pick boring.
 
 Apply in this order; stop as soon as it fits:
 
-1. Cut the weakest bullet. Content first, always.
+1. Cut the weakest bullet. Content first, always. **Weakest** is not oldest and not least
+   impressive — it is the lowest **relevance-to-this-posting × uniqueness ×
+   cover-letter-load**: how directly the line answers a ranked JD requirement, whether it
+   proves something no surviving line already proves, and whether the cover letter's proof
+   paragraph leans on it. Cut the lowest product first, so an older bullet that hits the
+   posting's keywords survives over a recent one that misses. Every reframe also passes the
+   **interview-backtrack stretch-test** — if the candidate would have to walk the line back
+   in a screen with "well, what I actually meant was…", soften it to what they can defend
+   verbatim or drop it. Both are applied internally and recorded in the application's
+   `notes.md`; the full statement of the rules lives in the `apply` procedure (step 3).
 2. Tune the inter-section `\vspace{-Npt}` values already present between sections.
 3. Widen the text block via the `\addtolength` margin block (currently ≈0.6in of extra
    width and ≈1.5in of extra height).

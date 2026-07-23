@@ -150,12 +150,31 @@ The three that decide whether the CV gets read:
   `4-achievement-bank.md` that map to the ranked requirements, order them by that ranking
   rather than by how proud the candidate is of them, and reframe each in the JD's
   vocabulary. Reframing means the same fact, different emphasis — never a different fact.
+  Run every reframe through the **interview-backtrack stretch-test**: if the candidate,
+  asked about the line in a screen, would have to walk it back with "well, what I actually
+  meant was…", the reframe has drifted too far. Soften it to what they could defend
+  verbatim, or drop it. Apply this internally — no per-reframe approval prompt — and record
+  each line softened or dropped, and why, under a **Cuts and softenings** heading in
+  `notes.md`.
 - **The skills groups** carry the ATS harvest: bold abilities, each listing its tools and
   keywords in verbatim JD spelling, every term defensible.
 
-Cut to the page cap in `guardrails.max_pages` by cutting the weakest content first, per
-the backend's fitting order. A CV that fits by shrinking type has not been tailored, it
-has been compressed.
+Cut to the page cap in `guardrails.max_pages` by removing the **weakest** content first,
+per the backend's fitting order. "Weakest" is not "oldest" and not "least impressive" — it
+is the lowest **relevance-to-this-posting × uniqueness × cover-letter-load**:
+
+- **Relevance** — how directly the line answers a ranked requirement from step 2. A line
+  that hits a "must have" outranks one that hits a "nice to have".
+- **Uniqueness** — whether the line proves something no other surviving line already
+  proves. Two bullets covering the same competency make the weaker one cuttable.
+- **Cover-letter-load** — whether the cover letter's proof paragraph leans on this fact.
+  A bullet the letter builds a story around must stay, or the letter is left dangling.
+
+Score each candidate line on all three and cut the lowest product first. A recent bullet
+that misses the posting loses to an older bullet that hits its keywords — recency never
+beats relevance. Apply this internally — no per-cut approval prompt — and record what was
+cut, and why, under the **Cuts and softenings** heading in `notes.md`. A CV that fits by
+shrinking type has not been tailored, it has been compressed.
 
 ## 4. Render and verify
 

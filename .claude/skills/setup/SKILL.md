@@ -149,10 +149,10 @@ the question.
 Treat the **fit-critical facts** as gaps too, and expect documents to be silent on them —
 they are subjective and almost never written down, so their absence is a gap to raise in
 step 5, not a sign the candidate has none. In `1-identity-and-constraints.md`: hard
-deal-breakers, the location/relocation stance, and the compensation floor. In
-`10-career-narrative.md`: what motivates the candidate, their career goals, and the kinds
-of work that energise versus drain them. These are what the fit score and the cover-letter
-angle-inference read from, so an empty subheading for any of them is a gap worth a question.
+deal-breakers and the location/relocation stance. In `10-career-narrative.md`: what
+motivates the candidate and their career goals. These are what the fit score and the
+cover-letter angle-inference read from, so an empty subheading for any of them is a gap
+worth a question.
 
 ### 5. The interview
 
@@ -212,14 +212,10 @@ as helping tailor future applications rather than as a screening test:
   → `1-identity-and-constraints.md` under "Deal-breakers".
 - **Location / relocation stance** — where they are, and whether they will relocate or need
   remote → `1-identity-and-constraints.md` under "Location and mobility".
-- **Compensation floor** — the lowest they would accept, if they will name one →
-  `1-identity-and-constraints.md` under "Availability and compensation".
 - **Motivation** — "What actually drives you at work — what makes a job worth doing?" →
   `10-career-narrative.md` under "Motivation".
 - **Career goals** — where they want to be in a few years →
   `10-career-narrative.md` under "Career goals".
-- **Energising vs. draining work** — "Which kinds of work light you up, and which ones you
-  dread?" → `10-career-narrative.md` under "Energising vs. draining work".
 
 Accept "no strong view" or "prefer not to say" without pushing, and record that answer as
 given rather than leaving the subheading looking unasked.

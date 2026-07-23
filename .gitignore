@@ -1,8 +1,8 @@
 # Project specifics to ignore
-TODOS.md
-knowledge/raw/*
-docs/
 .scratch/
+docs/
+applications/
+knowledge/raw/*
 
 # OS noise
 .DS_Store

@@ -1,2 +1,11 @@
 TODOS.md
 knowledge/raw/*
+
+# OS noise
+.DS_Store
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.synctex.gz

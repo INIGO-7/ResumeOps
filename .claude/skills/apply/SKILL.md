@@ -66,19 +66,36 @@ first is what stops the CV from being a lightly reworded copy of the last one.
 - **Requirements, ranked.** Pull every requirement out of the JD and rank it by how much
   the posting leans on it: what appears in the title, first, repeatedly, or under
   "must have" outranks a bullet buried under "nice to have".
-- **Evidence map.** For each requirement, the specific item in `knowledge/` that proves it
-  — file and entry, not a vibe. Mark each as **strong** (a quantified achievement),
-  **partial** (adjacent or dated experience), or **absent**.
+- **Evidence map — classify every requirement.** For each ranked requirement, name the
+  specific item in `knowledge/` that backs it — file and entry, not a vibe — and classify
+  the requirement into exactly one of three:
+  - **existing** — a concrete, defensible item in the store proves it directly: a
+    quantified achievement, a held credential, an explicit recorded fact. Cite the file
+    and entry.
+  - **supported-by-prose** — no direct proof, but adjacent, dated, or narrative material in
+    the store honestly supports it and can be framed toward the requirement without
+    inventing anything. Cite the file and entry, and name what it is (adjacent tech, older
+    role, transferable project) so the framing stays honest.
+  - **gap** — nothing in the store backs it. No citation, because there is nothing to cite.
+
+  This is a semantic judgement, not a keyword match: decide whether the recorded fact would
+  actually convince a recruiter this requirement is met, not whether the words overlap.
+  Both `existing` and `supported-by-prose` always carry their file+entry citation; only a
+  true `gap` has none — the evidence trail is never dropped for a requirement that has one.
 - **Keyword harvest.** The exact terms the ATS will scan for, in the JD's own spelling.
   Only terms the candidate can defend in an interview survive into the CV.
 - **Angle.** One or two sentences: which version of this candidate the CV is presenting,
   and what gets demoted to make room. Everything downstream follows from this.
 
-Then handle the gaps per `guardrails.missing_evidence` in `config.yml`. With `ask`: bring
-the user every **absent** requirement in one batch — one message, not a drip — asking
-whether they have something unrecorded that covers it. Often they do; it never made it
-into the store. Whatever comes back gets written into `knowledge/generated/` first, then
-used. Never soften an absence into a claim, and never round a partial up to a strong.
+**Surface every `gap` before drafting — mandatory, never skipped.** Before a single CV
+line is written, bring the candidate every requirement classified `gap` in one batch — one
+message, not a drip. A `gap` is never silently omitted from the CV; it is always a
+conversation first. How the batch is handled follows `guardrails.missing_evidence` in
+`config.yml`: with `ask`, present each gap and ask whether they have something unrecorded
+that covers it — often they do, it just never made it into the store. Whatever comes back
+gets written into `knowledge/generated/` first, then reclassified (a gap that the answer
+fills becomes `existing` or `supported-by-prose`) and used. Never soften a `gap` into a
+claim, and never round `supported-by-prose` up to `existing`.
 
 ## 3. Draft the CV
 

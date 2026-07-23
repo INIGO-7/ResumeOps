@@ -146,6 +146,14 @@ one specific question in step 5, so make the list concrete: not "role thin" but 
 2020–2023 has no achievement recorded" — the wording of the gap is most of the wording of
 the question.
 
+Treat the **fit-critical facts** as gaps too, and expect documents to be silent on them —
+they are subjective and almost never written down, so their absence is a gap to raise in
+step 5, not a sign the candidate has none. In `1-identity-and-constraints.md`: hard
+deal-breakers and the location/relocation stance. In `10-career-narrative.md`: what
+motivates the candidate and their career goals. These are what the fit score and the
+cover-letter angle-inference read from, so an empty subheading for any of them is a gap
+worth a question.
+
 ### 5. The interview
 
 Report what got populated and what is thin, then work through the gap list from step 4 as
@@ -195,6 +203,22 @@ Cover the awkward things too, because a recruiter will: employment gaps, a short
 pivot, a step sideways. Ask neutrally and record the explanation in
 `10-career-narrative.md` under "Things a recruiter will ask about". This is a store, not a
 judgement — say so if the user seems defensive.
+
+Elicit the **fit-critical facts** when they are absent, one question at a time, framing each
+as helping tailor future applications rather than as a screening test:
+
+- **Hard deal-breakers** — "Is there anything that would make you turn a role down outright,
+  no matter how good the rest is — no relocation, a salary you won't go below, no on-call?"
+  → `1-identity-and-constraints.md` under "Deal-breakers".
+- **Location / relocation stance** — where they are, and whether they will relocate or need
+  remote → `1-identity-and-constraints.md` under "Location and mobility".
+- **Motivation** — "What actually drives you at work — what makes a job worth doing?" →
+  `10-career-narrative.md` under "Motivation".
+- **Career goals** — where they want to be in a few years →
+  `10-career-narrative.md` under "Career goals".
+
+Accept "no strong view" or "prefer not to say" without pushing, and record that answer as
+given rather than leaving the subheading looking unasked.
 
 Stop when the agenda is covered or the user is done. Do not grind through a checklist for
 completeness; a tired user gives worse answers than a fresh one, and setup can resume

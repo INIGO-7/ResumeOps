@@ -29,10 +29,10 @@ Whatever the styling ambition, the document underneath stays boringly parseable:
 ## Type and colour
 
 - System font stack for prose (`--sans`); a monospace stack (`--mono`) for the tagline,
-  contact line, section headings, keyword line, skill-group labels and dates. That
-  mono/sans split is the whole "engineer" gesture — resist adding more.
+  contact line, section headings, skill-group labels and dates. That mono/sans split is
+  the whole "engineer" gesture — resist adding more.
 - One accent colour (`--accent`), used for links, list markers, the `//` heading prefix,
-  role names and the keyword line's left border. Never for body text.
+  role names and the bold skill-group labels. Never for body text.
 - Dark by default; light mode via `prefers-color-scheme`. Both are defined as CSS variable
   overrides on `:root` — restyle by editing variables, not rules.
 - Body 14px / 1.5 on screen. Do not go below 13px.
@@ -42,9 +42,9 @@ Whatever the styling ambition, the document underneath stays boringly parseable:
 The `@media print` block is the PDF renderer. It flips to a light, ink-friendly palette,
 drops to ~10.2px / 1.42, removes the page chrome, and sets 12–13mm page margins.
 
-- Export: Cmd/Ctrl-P → Save as PDF, Letter or A4, margins "Default", **background
-  graphics ON** (the keyword block's panel and border need it).
-- `.entry` and `.keywords` carry `break-inside: avoid`; `h2` carries `break-after: avoid`.
+- Export: Cmd/Ctrl-P → Save as PDF, Letter or A4, margins "Default". Nothing on the page
+  carries a background any more, so the "background graphics" toggle no longer matters.
+- `.entry` and `dl.skills` carry `break-inside: avoid`; `h2` carries `break-after: avoid`.
   Add the same to any new block-level construct, or it will split across a page break.
 - Always open the print preview before shipping. A page that looks like a tidy one-pager
   on screen and spills three lines onto page 2 in print is the default failure mode here.

@@ -24,7 +24,6 @@
 <style>
   :root {
     --bg:        #0d1117;
-    --panel:     #11161d;
     --rule:      #232c38;
     --text:      #d7dee8;
     --muted:     #8b97a8;
@@ -137,22 +136,14 @@
 
   /* ---------- skills ---------- */
 
-  /* Keyword harvest line: comma-separated plain text, deliberately NOT a tag
-     cloud of <span>s, so an ATS reads one clean list. */
-  .keywords {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--muted);
-    margin: 0 0 14px;
-    padding: 10px 12px;
-    border-left: 2px solid var(--accent);
-    background: var(--panel);
-  }
-
+  /* Bold ability labels, each followed by its keywords/tools as comma-
+     separated plain text — deliberately NOT a tag cloud of <span>s, so an
+     ATS reads one clean list per ability. */
   dl.skills { margin: 0; }
   dl.skills dt {
     font-family: var(--mono);
     font-size: 11.5px;
+    font-weight: 600;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--accent);
@@ -168,7 +159,7 @@
 
   @media (prefers-color-scheme: light) {
     :root {
-      --bg: #ffffff; --panel: #f5f7fa; --rule: #dde3ea;
+      --bg: #ffffff; --rule: #dde3ea;
       --text: #2b3440; --muted: #616d7e; --heading: #10151c; --accent: #0b62d0;
     }
   }
@@ -177,7 +168,7 @@
 
   @media print {
     :root {
-      --bg: #ffffff; --panel: #f4f6f9; --rule: #c9d2dc;
+      --bg: #ffffff; --rule: #c9d2dc;
       --text: #14181d; --muted: #4a5561; --heading: #000000; --accent: #0b4da2;
     }
     body { font-size: 10.2px; line-height: 1.42; }
@@ -187,7 +178,7 @@
     h2 { font-size: 10.5px; margin-bottom: 9px; }
     .entry { margin-bottom: 12px; }
     /* Never split an entry or a section heading across pages. */
-    .entry, .keywords { break-inside: avoid; page-break-inside: avoid; }
+    .entry, dl.skills { break-inside: avoid; page-break-inside: avoid; }
     h2 { break-after: avoid; page-break-after: avoid; }
     a { text-decoration: none; }
     @page { margin: 12mm 13mm; }
@@ -214,39 +205,34 @@
   <!-- =================== SUMMARY =================== -->
   <section>
     <h2>Summary</h2>
+    <!-- A portrait of the candidate, never a paraphrase of the JD. -->
     <p class="summary">
-      &lt;ROLE TITLE&gt; who &lt;CORE DIFFERENTIATOR, IN THE JD'S OWN LANGUAGE&gt;.
-      &lt;ONE SENTENCE ON HOW YOU WORK — ownership, first principles, business outcomes&gt;.
-      &lt;ONE SENTENCE ON THE DOMAIN DEPTH THIS JD ASKS FOR&gt;.
-      &lt;CREDENTIALS: degrees, years of experience&gt;.
-      &lt;CONSTRAINT / INTENT: relocation, work authorisation, availability&gt;.
+      &lt;PROFILE: the role(s) the candidate has operated in — research, engineering, a mix — and at what level&gt;.
+      &lt;ACADEMIC HISTORY: degrees and, when they carry weight, institutions&gt;.
+      &lt;INTENT: what they want next and where, e.g. thrive in &lt;CITY&gt;'s rich AI ecosystem&gt;,
+      &lt;WHY-FIT: extremely concise, finishing the intent sentence&gt;.
+      &lt;HARD CONSTRAINT, if any: location, work authorisation, availability&gt;.
     </p>
   </section>
 
   <!-- =================== SKILLS =================== -->
   <section>
     <h2>Skills</h2>
-    <!-- ATS harvest line: terms lifted verbatim from the JD. Every one must be
-         true and evidenced in knowledge/. -->
-    <p class="keywords">
-      &lt;JD TERM 1&gt;, &lt;JD TERM 2&gt;, &lt;JD TERM 3&gt;, &lt;JD TERM 4&gt;,
-      &lt;JD TERM 5&gt;, &lt;JD TERM 6&gt;, &lt;JD TERM 7&gt;, &lt;JD TERM 8&gt;,
-      &lt;JD TERM 9&gt;, &lt;JD TERM 10&gt;, &lt;JD TERM 11&gt;, &lt;JD TERM 12&gt;
-    </p>
+    <!-- 4-6 bold abilities, each followed by its keywords and tools. The ATS
+         harvest lives inside these groups: verbatim JD spelling, every term
+         true and evidenced in knowledge/. Order groups by what the JD leads
+         with. -->
     <dl class="skills">
-      <dt>Languages</dt>
-      <dd>&lt;LANGUAGE&gt; (&lt;N&gt;+ yrs), &lt;LANGUAGE&gt;, &lt;LANGUAGE&gt;</dd>
+      <dt>&lt;ABILITY 1 — e.g. Infrastructure &amp; Languages&gt;</dt>
+      <dd>&lt;TOOL&gt; (&lt;N&gt;+ yrs), &lt;TOOL&gt;, &lt;TOOL&gt;; &lt;TOOL&gt;, &lt;TOOL&gt;, &lt;TOOL&gt;</dd>
 
-      <dt>&lt;GROUP 2 — e.g. Systems &amp; Infrastructure&gt;</dt>
+      <dt>&lt;ABILITY 2 — e.g. ML &amp; Generative AI&gt;</dt>
       <dd>&lt;TOOL&gt;, &lt;TOOL&gt;, &lt;TOOL&gt;, &lt;TOOL&gt;</dd>
 
-      <dt>&lt;GROUP 3 — e.g. ML &amp; Generative AI&gt;</dt>
+      <dt>&lt;ABILITY 3 — e.g. Data &amp; Pipelines&gt;</dt>
       <dd>&lt;TOOL&gt;, &lt;TOOL&gt;, &lt;TOOL&gt;, &lt;TOOL&gt;</dd>
 
-      <dt>&lt;GROUP 4 — e.g. Evaluation &amp; Efficiency&gt;</dt>
-      <dd>&lt;TOOL&gt;, &lt;TOOL&gt;, &lt;TOOL&gt;, &lt;TOOL&gt;</dd>
-
-      <dt>&lt;GROUP 5 — e.g. Tooling &amp; Observability&gt;</dt>
+      <dt>&lt;ABILITY 4 — e.g. Evaluation &amp; Observability&gt;</dt>
       <dd>&lt;TOOL&gt;, &lt;TOOL&gt;, &lt;TOOL&gt;, &lt;TOOL&gt;</dd>
     </dl>
   </section>
@@ -303,19 +289,26 @@
   </section>
 
   <!-- =================== PROJECTS =================== -->
+  <!-- Best-matching projects for the JD first. Where space allows, be
+       comprehensive: what was done and achieved, the engineering techniques
+       applied (never naming the JD), methodology if one applies. A highly
+       relevant project may take more than one bullet; balance that depth
+       against listing more projects to show a varied profile. -->
   <section>
     <h2>Projects &amp; Research</h2>
 
     <div class="entry">
       <div class="entry-head">
-        <div><span class="entry-title">&lt;PROJECT NAME&gt;</span> &middot;
+        <div><span class="entry-title">&lt;MOST JD-RELEVANT PROJECT&gt;</span> &middot;
              <span class="entry-role">&lt;CONTEXT: thesis, research, OSS&gt;</span></div>
         <div class="entry-meta">&lt;YYYY&gt;</div>
       </div>
       <div class="stack">&lt;STACK&gt;</div>
       <ul class="bullets">
-        <li>&lt;What problem, what you built, what constraint made it hard, and the result —
+        <li>&lt;What problem, what was built, and what it achieved —
             with a <a href="&lt;URL&gt;">link</a> if there is one&gt;.</li>
+        <li>&lt;The engineering techniques applied and the methodology, if one applies —
+            earned only by strong JD relevance&gt;.</li>
       </ul>
     </div>
 
@@ -333,23 +326,28 @@
   </section>
 
   <!-- =================== EDUCATION =================== -->
+  <!-- Degree in bold alongside the institution. Below each entry, one short
+       line of coursework relevant to the target role — only the courses that
+       map to it, without restating the Skills section. -->
   <section>
     <h2>Education</h2>
 
     <div class="entry">
       <div class="entry-head">
         <div><span class="entry-title">&lt;INSTITUTION&gt;</span> &middot;
-             <span class="entry-role">&lt;DEGREE&gt;</span></div>
+             <span class="entry-title">&lt;DEGREE&gt;</span></div>
         <div class="entry-meta">&lt;MON YYYY&gt; – &lt;MON YYYY&gt; &middot; &lt;CITY, COUNTRY&gt;</div>
       </div>
+      <div class="stack">Relevant coursework: &lt;COURSE&gt;, &lt;COURSE&gt;, &lt;COURSE&gt;, &lt;COURSE&gt;</div>
     </div>
 
     <div class="entry">
       <div class="entry-head">
         <div><span class="entry-title">&lt;INSTITUTION&gt;</span> &middot;
-             <span class="entry-role">&lt;DEGREE&gt;</span></div>
+             <span class="entry-title">&lt;DEGREE&gt;</span></div>
         <div class="entry-meta">&lt;MON YYYY&gt; – &lt;MON YYYY&gt; &middot; &lt;CITY, COUNTRY&gt;</div>
       </div>
+      <div class="stack">Relevant coursework: &lt;COURSE&gt;, &lt;COURSE&gt;, &lt;COURSE&gt;</div>
     </div>
   </section>
 

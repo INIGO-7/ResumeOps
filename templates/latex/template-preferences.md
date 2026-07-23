@@ -32,11 +32,13 @@ parseable", pick boring.
 
 - Section headings: small caps, `\large`, followed by `\titlerule`. Do not restyle.
 - Use the provided commands rather than hand-rolling tabulars:
-  - `\resumeExpHeading{Company}{Role}{Dates}{Location}` — Experience and Awards.
+  - `\resumeExpHeading{Company}{Role}{Dates}{Location}` — Experience and Awards; also
+    Education as `{Institution}{Degree}{Dates}{Location}`, so the degree sits bold
+    alongside the institution, followed by one `\resumeItem` of relevant coursework.
   - `\resumeSubSubheading{Role}{Dates}` — a second role at the same employer, nested
     under one `\resumeExpHeading`.
   - `\resumeProjectHeading{Name (context)}{Stack}` — Projects.
-  - `\resumeSubheading{Institution}{Location}{Degree}{Dates}` — Education.
+  - `\resumeSubheading{...}` — generic 4-field heading, kept as a fallback only.
   - `\resumeItem{...}` inside `\resumeItemListStart` / `\resumeItemListEnd` — bullets.
 - Skills and Languages use a bare `itemize` with `label={}` and bold run-in labels, not
   the heading commands.

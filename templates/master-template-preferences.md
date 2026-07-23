@@ -9,16 +9,16 @@ mechanics belongs in the backend's own `template-preferences.md`, not here.
 Fixed, in this order. Skip a section entirely rather than padding it:
 
 1. **Summary**
-2. **Skills** — a keyword line followed by grouped technical skills
+2. **Skills** — bold ability groups, each carrying its tools and keywords
 3. **Experience** (professional record)
 4. **Key Awards**
 5. **Projects** (and research)
 6. **Education**
 7. **Languages**
 
-Rationale: a recruiter reads top-down for ~15 seconds. The summary states the fit, the
-keyword line satisfies the ATS scan and the human skim at once, and the professional
-record carries the proof. Education sits low because work evidence outranks it once
+Rationale: a recruiter reads top-down for ~15 seconds. The summary states who the
+candidate is, the skills block satisfies the ATS scan and the human skim at once, and
+the professional record carries the proof. Education sits low because work evidence outranks it once
 there is any; move Education above Experience only for a candidate with no professional
 record yet.
 
@@ -29,13 +29,21 @@ second page — either it is full or the content gets cut.
 
 ## Summary
 
+A portrait of the candidate, not a paraphrase of the posting. The failure mode to avoid:
+a summary that regurgitates the JD's requirements back with "…which I have" appended —
+a recruiter recognises their own posting instantly and learns nothing from it.
+
 - 3–5 lines, no heading fluff, no "results-driven professional".
-- Sentence 1: what you are and the single differentiator the JD is asking for, phrased
-  in the JD's own vocabulary.
-- Sentence 2: how you work (ownership, first principles, business outcomes).
-- Sentence 3: the domain depth this JD cares about.
-- Then credentials (degrees, years) and any hard constraint the recruiter must know
-  up front: location, relocation intent, work authorisation, availability.
+- Sentence 1: the candidate's main profile — the role(s) they have actually operated in
+  (research, engineering, product, a mix) and at what level.
+- Sentence 2: academic history in one clause — degrees and, when they carry weight,
+  institutions.
+- Sentence 3: intent — what the candidate wants to do next and where (e.g. "looking to
+  thrive in <city>'s rich AI ecosystem") — capped with the why-they-fit. The fit clause
+  is **extremely concise** and finishes the intent sentence; it never becomes its own
+  paragraph of JD echoes.
+- Any hard constraint the recruiter must know up front: location, relocation intent,
+  work authorisation, availability.
 - No first-person pronouns except a deliberate "I" if the voice calls for it; never mix.
 
 ## Bullets
@@ -54,16 +62,20 @@ second page — either it is full or the content gets cut.
 
 ## Skills
 
-Two blocks, both under one **Skills** heading:
+One block under the **Skills** heading: 4–6 main abilities, each **in bold**, followed
+by the keywords and tools for that ability. Example:
 
-- **Keywords** — a flat, comma-separated line of terms lifted verbatim from the JD.
-  This is the ATS harvest. Match the JD's exact spelling ("Kubernetes", not "K8s";
-  include both the acronym and the expansion when the JD does). Every term must be true
-  and evidenced somewhere in `knowledge/`; a keyword you cannot defend in an interview
-  is a liability, not a match.
-- **Technical Skills** — 4–6 named groups, human-readable. Reorder the groups so the one
-  the JD leads with comes first. Within a group, most-relevant tool first. Add years only
-  where the depth is a selling point.
+> **Infrastructure & Languages:** Python (5+ yrs), C/C++, Scala, SQL; AWS (S3, Lambda),
+> Docker, PostgreSQL, FastAPI, Apache Airflow, Git
+
+No standalone "Keywords" line — the ATS harvest lives *inside* these groups. Terms the
+ATS will scan for use the JD's exact spelling ("Kubernetes", not "K8s"; include both the
+acronym and the expansion when the JD does). Every term must be true and evidenced
+somewhere in `knowledge/`; a keyword you cannot defend in an interview is a liability,
+not a match.
+
+Reorder the groups so the ability the JD leads with comes first. Within a group,
+most-relevant tool first. Add years only where the depth is a selling point.
 
 Never list a skill on the CV that does not appear in `knowledge/`.
 
@@ -75,14 +87,31 @@ X. Link the proof (press release, announcement) when one exists.
 
 ## Projects
 
-For depth the professional record does not show: theses, research, open source. Name the
-stack explicitly, state the constraint that made it hard, and give the result. Link the
-repo, paper or demo when there is one. Drop the section before dropping a work bullet.
+For depth the professional record does not show: theses, research, open source. Where
+space allows, this section is **comprehensive** — list the projects that best match the
+JD first, and cover for each:
+
+- what was done and what was achieved, relative to the problem;
+- the engineering techniques applied — never name the JD, but this is where the
+  recruiter sees the candidate has done this kind of work before;
+- the methodology, when one genuinely applies.
+
+That order is not mandatory, and a project may take more than one bullet when its
+relevance earns it. The balance to strike, per JD: deep detail on the few projects that
+map squarely onto the posting, versus more projects covered briefly to show a richer,
+more varied profile. Overexplaining a marginal project costs a relevant one its slot.
+
+Name the stack explicitly and link the repo, paper or demo when there is one. Drop the
+section before dropping a work bullet.
 
 ## Education
 
-Reverse chronological. Institution, degree, dates, location. Include GPA/honours only if
-strong and recent. No high school once there is a degree.
+Reverse chronological. The **degree in bold, alongside the institution name** on the
+entry's heading line; dates and location on the right. Below each entry, one line of
+**relevant coursework** — the courses that map to the target role, and only those. Keep
+the line short: coursework that merely restates the Skills section is wasted space, and
+too many courses dilute the ones that matter. Include GPA/honours only if strong and
+recent. No high school once there is a degree.
 
 ## Languages
 

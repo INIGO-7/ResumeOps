@@ -3,7 +3,7 @@
 % Based on Jake Gutierrez's resume template (MIT) / sb2nov
 %
 % Section order (fixed — see template-preferences.md):
-%   Summary -> Skills (Keywords + Technical Skills) -> Experience -> Awards
+%   Summary -> Skills -> Experience -> Awards
 %   -> Projects -> Education -> Languages
 %
 % Everything in <ANGLE BRACKETS> is a placeholder to replace. Delete any
@@ -74,7 +74,8 @@
 }
 
 % Generic 4-field heading: {left top}{right top}{left bottom}{right bottom}
-% Used for Education (institution / location / degree / dates).
+% Kept as a fallback; Education now uses \resumeExpHeading so the degree sits
+% bold alongside the institution.
 \newcommand{\resumeSubheading}[4]{
   \vspace{-1pt}\item
     \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
@@ -145,35 +146,32 @@
 \vspace{-12pt}
 
 %-----------SUMMARY-----------
-% 3-5 lines. Who you are, the level you operate at, the 2-3 things this JD
-% cares about most, and any hard constraint the recruiter must know (location,
-% visa, notice). Bold sparingly — only the phrases you want scanned.
+% 3-5 lines. A portrait of the candidate, never a paraphrase of the JD:
+% profile (the roles actually operated in), academic history, then intent
+% capped with an extremely concise why-fit clause. Add any hard constraint
+% the recruiter must know (location, visa, notice). Bold sparingly.
 \section{Summary}
 \vspace{2pt}
-\small{<ROLE TITLE> who <CORE DIFFERENTIATOR IN THE JD'S OWN LANGUAGE>. <ONE
-SENTENCE ON HOW YOU WORK — ownership, first principles, business outcomes>.
-<ONE SENTENCE ON DOMAIN DEPTH RELEVANT TO THIS JD>. <CREDENTIALS: degrees,
-years of experience>. <CONSTRAINT / INTENT: relocation, work authorisation,
-availability>.}
+\small{<PROFILE: the role(s) the candidate has operated in — research,
+engineering, a mix — and at what level>. <ACADEMIC HISTORY: degrees and, when
+they carry weight, institutions>. <INTENT: what they want next and where,
+e.g. thrive in <CITY>'s rich AI ecosystem>, <WHY-FIT: extremely concise,
+finishing the intent sentence>. <HARD CONSTRAINT, if any: location, work
+authorisation, availability>.}
 \vspace{-2pt}
 
 %-----------SKILLS-----------
-% Two blocks in one section:
-%  - Keywords: a flat, comma-separated ATS harvest line. Terms lifted verbatim
-%    from the JD, every one of which must be true and evidenced in knowledge/.
-%  - Technical Skills: the human-readable, grouped view. Reorder the groups so
-%    the one the JD leads with comes first.
+% One block: 4-6 main abilities in bold, each followed by its keywords and
+% tools. The ATS harvest lives inside these groups — verbatim JD spelling,
+% every term evidenced in knowledge/. Order the groups by what the JD leads
+% with; within a group, most-relevant tool first; years only where depth sells.
 \section{Skills}
  \begin{itemize}[leftmargin=0.15in, label={}]
     \footnotesize{\item{
-     \textbf{Keywords}{: <JD TERM 1>, <JD TERM 2>, <JD TERM 3>, <JD TERM 4>,
-     <JD TERM 5>, <JD TERM 6>, <JD TERM 7>, <JD TERM 8>, <JD TERM 9>,
-     <JD TERM 10>, <JD TERM 11>, <JD TERM 12>.} \\[2pt]
-     \textbf{Languages}{: <LANGUAGE> (<N>+ yrs), <LANGUAGE>, <LANGUAGE>} \\
-     \textbf{<GROUP 2 — e.g. Systems \& Infrastructure>}{: <TOOL>, <TOOL>, <TOOL>, <TOOL>} \\
-     \textbf{<GROUP 3 — e.g. ML \& Generative AI>}{: <TOOL>, <TOOL>, <TOOL>, <TOOL>} \\
-     \textbf{<GROUP 4 — e.g. Evaluation \& Efficiency>}{: <TOOL>, <TOOL>, <TOOL>, <TOOL>} \\
-     \textbf{<GROUP 5 — e.g. Tooling \& Observability>}{: <TOOL>, <TOOL>, <TOOL>, <TOOL>}
+     \textbf{<ABILITY 1 — e.g. Infrastructure \& Languages>}{: <TOOL> (<N>+ yrs), <TOOL>, <TOOL>; <TOOL>, <TOOL>, <TOOL>} \\
+     \textbf{<ABILITY 2 — e.g. ML \& Generative AI>}{: <TOOL>, <TOOL>, <TOOL>, <TOOL>} \\
+     \textbf{<ABILITY 3 — e.g. Data \& Pipelines>}{: <TOOL>, <TOOL>, <TOOL>, <TOOL>} \\
+     \textbf{<ABILITY 4 — e.g. Evaluation \& Observability>}{: <TOOL>, <TOOL>, <TOOL>, <TOOL>}
     }}
  \end{itemize}
 \vspace{-4pt}
@@ -229,14 +227,19 @@ availability>.}
 
 %-----------PROJECTS-----------
 % Thesis work, research, and side projects that show depth the jobs don't.
-% Stack goes on the right; keep it to one dense bullet each.
+% Best-matching projects for the JD first. Where space allows, be
+% comprehensive: what was done and achieved, the engineering techniques
+% applied (never naming the JD), methodology if one applies. A highly
+% relevant project may take more than one bullet; balance that depth against
+% listing more projects to show a varied profile. Stack goes on the right.
 \section{Projects <\& Research>}
     \resumeSubHeadingListStart
 
       \resumeProjectHeading
-          {\textbf{<PROJECT NAME>} (<CONTEXT: thesis, research, OSS>)}{\small\emph{<STACK>}}
+          {\textbf{<MOST JD-RELEVANT PROJECT>} (<CONTEXT: thesis, research, OSS>)}{\small\emph{<STACK>}}
           \resumeItemListStart
-            \resumeItem{<What problem, what you built, what constraint made it hard, and the result — with a \href{<URL>}{\underline{link}} if there is one>.}
+            \resumeItem{<What problem, what was built, and what it achieved — with a \href{<URL>}{\underline{link}} if there is one>.}
+            \resumeItem{<The engineering techniques applied and the methodology, if one applies — earned only by strong JD relevance>.}
           \resumeItemListEnd
 
       \vspace{3pt}
@@ -251,14 +254,24 @@ availability>.}
 \vspace{-5pt}
 
 %-----------EDUCATION-----------
+% Degree in bold alongside the institution (same heading as Experience).
+% Below each entry, one short line of coursework relevant to the target role
+% — only the courses that map to it, without restating the Skills section.
 \section{Education}
   \resumeSubHeadingListStart
-    \resumeSubheading
-      {<INSTITUTION>}{<CITY, COUNTRY>}
-      {<DEGREE>}{<MON YYYY> -- <MON YYYY>}
-    \resumeSubheading
-      {<INSTITUTION>}{<CITY, COUNTRY>}
-      {<DEGREE>}{<MON YYYY> -- <MON YYYY>}
+
+    \resumeExpHeading
+      {<INSTITUTION>}{<DEGREE>}{<MON YYYY> -- <MON YYYY>}{<CITY, COUNTRY>}
+      \resumeItemListStart
+        \resumeItem{\textit{Relevant coursework:} <COURSE>, <COURSE>, <COURSE>, <COURSE>.}
+      \resumeItemListEnd
+
+    \resumeExpHeading
+      {<INSTITUTION>}{<DEGREE>}{<MON YYYY> -- <MON YYYY>}{<CITY, COUNTRY>}
+      \resumeItemListStart
+        \resumeItem{\textit{Relevant coursework:} <COURSE>, <COURSE>, <COURSE>.}
+      \resumeItemListEnd
+
   \resumeSubHeadingListEnd
 \vspace{-2pt}
 

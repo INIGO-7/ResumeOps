@@ -104,16 +104,39 @@ has been compressed.
 
 ## 4. Render and verify
 
+Both backends end in the same place: a PDF **the agent produced**, that the agent then
+inspects. Only the render command differs — the verification below is identical for both,
+run on the final PDF at the end. Never hand a manual export back to the user as the normal
+path; produce the PDF here so the same checks always run.
+
+### Produce the PDF
+
 For `latex`:
 
 ```bash
 pdflatex -interaction=nonstopmode cv.tex && pdflatex -interaction=nonstopmode cv.tex
 ```
 
-Then verify, every time, no exceptions:
+For `html`, render it headlessly — the template's `@media print` block *is* the renderer,
+so the output matches a real Cmd/Ctrl-P export:
 
-- **It compiled clean.** Grep the log for `^!` and for overfull boxes that push into the
-  margin. A PDF that renders despite an error is the common failure, not the rare one.
+```bash
+"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --disable-gpu \
+  --no-pdf-header-footer --print-to-pdf=cv.pdf "file://$PWD/cv.html"
+```
+
+Use whatever Chromium-family binary the machine has (`chromium`, `chrome-headless-shell`).
+Only if none is present, fall back to asking the user to Cmd/Ctrl-P → Save as PDF (Letter/A4,
+margins "Default") and hand the file back — but that is the fallback, not the default.
+
+### The text-layer checks
+
+Run these every time, no exceptions. They read the PDF as data — what the ATS sees — and
+none of them can see the page's layout:
+
+- **It compiled clean** *(latex)*. Grep the log for `^!` and for overfull boxes that push
+  into the margin. A PDF that renders despite an error is the common failure, not the rare
+  one. (The html render has no log; its layout faults surface in the visual pass below.)
 - **Page count.** `pdfinfo cv.pdf | grep Pages` against `guardrails.max_pages`.
 - **The text layer.** `pdftotext cv.pdf - | head -60` must come back in reading order,
   with accents and ligatures intact and no mojibake. This is what the ATS sees; a PDF
@@ -121,9 +144,39 @@ Then verify, every time, no exceptions:
 - **The keyword check.** Confirm the harvested keywords actually appear in the extracted
   text. If a term only exists inside a graphic or a ligature-broken word, it is not there.
 
-For `html`, the export is the user's to run (Cmd/Ctrl-P → Save as PDF, background
-graphics on). Hand them the file and the export settings, then ask for the PDF back so
-the same extraction and page-count checks can run on it.
+### The visual-inspection loop
+
+The checks above pass on a PDF whose text is correct but whose *layout* is broken — a
+heading stranded at the foot of a page, an entry title split from its body, a lake of
+whitespace. The extractor cannot see any of it, so **Read the produced `cv.pdf`** (the file
+tool renders the pages as images) and inspect it against this checklist — the same list for
+either backend:
+
+- **Page count** is within `guardrails.max_pages` — confirm visually, not only via `pdfinfo`.
+- **No orphaned heading.** No section heading or entry heading (latex `\resumeExpHeading` /
+  `\resumeProjectHeading`; html `h2` / `.entry` head) sits alone at the foot of a page with
+  its content pushed to the next.
+- **No split entry.** No role/entry title is separated from the first line of its body.
+- **No isolated heading** left dangling with nothing beneath it.
+- **No large whitespace pool** — no dead band of empty space mid-page or a page ending far
+  short of the others.
+- **No content breaking into the margin** — text or rules running past the text block.
+
+On a defect, apply the **named rescue for the active backend**, then **re-render and Read the
+PDF again**. Fix one defect per pass so each rescue's effect is legible:
+
+- **latex** — from `templates/latex/template-preferences.md` ("Visual-defect rescues"):
+  `\needspace{N\baselineskip}` before an orphaned/isolated/split heading, `\enlargethispage`
+  for a one-or-two-line near-miss overflow, a content cut per the fitting order for a
+  structural overflow or whitespace pool.
+- **html** — from `templates/html/template-preferences.md` ("Print / PDF export"):
+  `break-inside: avoid` / `break-after: avoid` on the block that split, a tweak to the
+  `@media print` sizing for a near-miss overflow, a content cut for a structural one.
+
+**Cap the loop at 3 passes.** If the page is clean, proceed. If defects remain after the
+third pass, **stop** — do not ship silently and do not keep looping. Report the specific
+unresolved defects to the candidate (which heading, which page, what was tried), so they can
+decide between a further content cut and accepting the layout.
 
 Rename the final PDF per `output.filename` in `config.yml`, resolving `<Name>` from
 `knowledge/generated/1-identity-and-constraints.md` and `<Role>` from the JD's title.

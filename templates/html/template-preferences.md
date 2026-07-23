@@ -42,12 +42,38 @@ Whatever the styling ambition, the document underneath stays boringly parseable:
 The `@media print` block is the PDF renderer. It flips to a light, ink-friendly palette,
 drops to ~10.2px / 1.42, removes the page chrome, and sets 12–13mm page margins.
 
-- Export: Cmd/Ctrl-P → Save as PDF, Letter or A4, margins "Default". Nothing on the page
-  carries a background any more, so the "background graphics" toggle no longer matters.
-- `.entry` and `dl.skills` carry `break-inside: avoid`; `h2` carries `break-after: avoid`.
-  Add the same to any new block-level construct, or it will split across a page break.
-- Always open the print preview before shipping. A page that looks like a tidy one-pager
-  on screen and spills three lines onto page 2 in print is the default failure mode here.
+- The agent produces the PDF itself, headlessly, so the same visual-inspection loop that
+  covers the latex backend runs here too (see `apply` step 4):
+
+  ```bash
+  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --disable-gpu \
+    --no-pdf-header-footer --print-to-pdf=cv.pdf "file://$PWD/cv.html"
+  ```
+
+  This drives the `@media print` block exactly as a manual Cmd/Ctrl-P → Save as PDF (Letter
+  or A4, margins "Default") would; nothing on the page carries a background, so the
+  "background graphics" toggle no longer matters. A manual export is only the fallback when
+  no Chromium-family binary is available.
+
+### Visual-defect rescues
+
+When the visual-inspection loop finds a layout fault in the rendered PDF, these are the
+html-side rescues — the counterpart to the latex `\needspace` / `\enlargethispage` macros.
+Apply one per pass, re-render, and re-inspect:
+
+- **Split or orphaned block** — an entry or skills list broken across a page, or a heading
+  stranded at the foot with its content overleaf. `.entry` and `dl.skills` already carry
+  `break-inside: avoid` and `h2` carries `break-after: avoid`; add the same to whatever
+  block-level construct split, or it will break across a page.
+- **Near-miss overflow** — content spills one or two lines past the page cap. Nudge the
+  `@media print` sizing (the ~10.2px / 1.42 body, or the 12–13mm margins) just enough to
+  reclaim them; never below the 13px screen / print-legible floor.
+- **Structural overflow or whitespace pool** — too much or too little content for the page.
+  This is a content cut or addition per the master fitting rules, not a print-CSS tweak.
+
+Always open the print preview (or Read the produced PDF) before shipping. A page that looks
+like a tidy one-pager on screen and spills three lines onto page 2 in print is the default
+failure mode here.
 
 ## Editing
 

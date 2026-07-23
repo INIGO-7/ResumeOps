@@ -67,6 +67,40 @@ Apply in this order; stop as soon as it fits:
 Never fake fit by shrinking a single section's font or by pushing content into the
 margins beyond the values above.
 
+## Visual-defect rescues
+
+The fitting order above decides *how much* content the page carries. These rescues fix
+*where the page breaks* — the layout faults a text-layer check can't see: a section
+heading or `\cventry` title stranded at the foot of the page, a role title split from
+its body, or content that has spilled a few lines past the page cap. They are applied by
+the visual-inspection loop in `apply` step 4 after a compile, one defect at a time.
+
+Apply in this order; recompile and re-inspect after each, and stop as soon as the defect
+clears:
+
+1. **Orphaned or isolated heading** — a section heading, `\resumeExpHeading`, or
+   `\resumeProjectHeading` sitting alone at the bottom of the page with its content pushed
+   to the next. Put `\needspace{Nbaselineskip}` immediately before the heading, sizing `N`
+   to the heading plus its first two or three lines (typically `\needspace{4\baselineskip}`).
+   This binds the heading to what follows so they break together. Prefer this over any
+   spacing tweak — it targets the exact break rather than nudging the whole page.
+2. **Near-miss overflow** — content spills only one or two lines past the page cap, and the
+   fitting-order content cuts would over-thin an otherwise complete page. Add a single
+   `\enlargethispage{\baselineskip}` (or `\enlargethispage{2\baselineskip}` for two lines)
+   to pull the spilled lines back onto the page. Use sparingly and never beyond two
+   baselineskips — past that the page reads visibly cramped and the honest fix is a content
+   cut per the fitting order above.
+3. **Still overflowing, or a whitespace pool** — the defect is structural, not a break
+   placement: too much content for one page, or too little (a pool of dead whitespace).
+   These are not break-rescue faults. Return to the "Fitting to one page" order — cut the
+   weakest bullet for overflow, or step the base size up / let content breathe for a pool —
+   rather than reaching for another macro.
+
+`\needspace` comes from the `needspace` package, already loaded in
+`resume-template.tex`; `\enlargethispage` is a plain-TeX primitive and needs no package.
+Both are local to the point of insertion — never leave a rescue macro in place once the
+underlying content changes, or it silently distorts the next render.
+
 ## ATS mechanics
 
 - `\pdfgentounicode=1` plus `cmap`, `glyphtounicode`, and `[T1]{fontenc}` must all stay:

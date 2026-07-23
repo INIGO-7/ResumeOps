@@ -66,19 +66,74 @@ first is what stops the CV from being a lightly reworded copy of the last one.
 - **Requirements, ranked.** Pull every requirement out of the JD and rank it by how much
   the posting leans on it: what appears in the title, first, repeatedly, or under
   "must have" outranks a bullet buried under "nice to have".
-- **Evidence map.** For each requirement, the specific item in `knowledge/` that proves it
-  — file and entry, not a vibe. Mark each as **strong** (a quantified achievement),
-  **partial** (adjacent or dated experience), or **absent**.
+- **Evidence map — classify every requirement.** For each ranked requirement, name the
+  specific item in `knowledge/` that backs it — file and entry, not a vibe — and classify
+  the requirement into exactly one of three:
+  - **existing** — a concrete, defensible item in the store proves it directly: a
+    quantified achievement, a held credential, an explicit recorded fact. Cite the file
+    and entry.
+  - **supported-by-prose** — no direct proof, but adjacent, dated, or narrative material in
+    the store honestly supports it and can be framed toward the requirement without
+    inventing anything. Cite the file and entry, and name what it is (adjacent tech, older
+    role, transferable project) so the framing stays honest.
+  - **gap** — nothing in the store backs it. No citation, because there is nothing to cite.
+
+  This is a semantic judgement, not a keyword match: decide whether the recorded fact would
+  actually convince a recruiter this requirement is met, not whether the words overlap.
+  Both `existing` and `supported-by-prose` always carry their file+entry citation; only a
+  true `gap` has none — the evidence trail is never dropped for a requirement that has one.
 - **Keyword harvest.** The exact terms the ATS will scan for, in the JD's own spelling.
   Only terms the candidate can defend in an interview survive into the CV.
 - **Angle.** One or two sentences: which version of this candidate the CV is presenting,
   and what gets demoted to make room. Everything downstream follows from this.
 
-Then handle the gaps per `guardrails.missing_evidence` in `config.yml`. With `ask`: bring
-the user every **absent** requirement in one batch — one message, not a drip — asking
-whether they have something unrecorded that covers it. Often they do; it never made it
-into the store. Whatever comes back gets written into `knowledge/generated/` first, then
-used. Never soften an absence into a claim, and never round a partial up to a strong.
+**Surface every `gap` before drafting — mandatory, never skipped.** Before a single CV
+line is written, bring the candidate every requirement classified `gap` in one batch — one
+message, not a drip. A `gap` is never silently omitted from the CV; it is always a
+conversation first. How the batch is handled follows `guardrails.missing_evidence` in
+`config.yml`: with `ask`, present each gap and ask whether they have something unrecorded
+that covers it — often they do, it just never made it into the store. Whatever comes back
+gets written into `knowledge/generated/` first, then reclassified (a gap that the answer
+fills becomes `existing` or `supported-by-prose`) and used. Never soften a `gap` into a
+claim, and never round `supported-by-prose` up to `existing`.
+
+**Fit score — advisory, before any CV line.** Once the evidence map, keywords, angle, and
+gap batch are settled, score the match and write it into `notes.md`. This is a decision
+aid, not a gate: **a low score never blocks drafting** — it tells the candidate whether
+this posting is worth a full tailoring pass, and they keep the final say. Score five
+dimensions:
+
+| Dimension | Weight | Read from |
+|---|---|---|
+| Technical Skills | 30 | strong/weak areas **derived on the fly** from `5-skills-inventory.md` against the JD's ranked technical requirements — never a hand-maintained match list |
+| Experience Match | 25 | the evidence map above: how many ranked requirements land **strong** vs **partial** vs **absent**, weighted by rank |
+| Behavioral / Culture Fit | 15 | the JD's tone and stated ways-of-working against `10-career-narrative.md` → *How I work* and *Strengths and known gaps*. Assessed from the JD + store only, never from external reviews |
+| Career Alignment & Motivation | 30 | `10-career-narrative.md` → *Motivation*, *Career goals*, *Target roles and companies*, *Industries and cultures to avoid* against what this role actually is |
+| Location & Logistics | pass/fail (unweighted) | the JD's location, work model and relocation ask against `1-identity-and-constraints.md` → *Location and mobility* and *Deal-breakers* |
+
+Each weighted dimension is 0–100. **Location & Logistics** is pass/fail — it fails when the
+posting violates a hard deal-breaker or the recorded location/relocation stance; a fail is
+a red flag surfaced beside the score, not a subtraction from it. The weighted average of
+the four weighted dimensions gives **Overall /100**, with a verdict tier:
+
+- **Strong** 75+ — apply; a strong fit, worth a full pass.
+- **Good** 60–74 — apply; solid fit, tailor to close the softer gaps.
+- **Moderate** 45–59 — apply if motivated; expect to work harder to stand out.
+- **Weak** 30–44 — skip unless there's a specific reason (referral, reach role, strategic).
+- **Poor** <30 — skip; the store doesn't back this role.
+
+Write into `notes.md`: the five-dimension table (each score with a one-line
+justification), the weighted **Overall /100**, the **verdict tier**, **key strengths** (the
+dimensions and requirements carrying the score), **gaps** (the absent requirements and weak
+dimensions dragging it down), and a **1–2 sentence apply/skip recommendation**.
+
+**Honesty over a number.** Career Alignment and Location depend on recorded facts —
+*Motivation*, *Career goals*, *Deal-breakers*, *Location and mobility*. If one is still the
+empty sentinel (`_(empty — run /setup)_`) or genuinely silent on what the JD needs (e.g.
+the JD states a compensation floor the store never recorded), **do not invent a score for
+that dimension**: mark it *insufficient data*, name the missing input in `notes.md`, and
+drop it from the weighted average — renormalising the remaining weights — rather than
+guessing. A flagged missing input is worth more than a fabricated 70.
 
 ## 3. Draft the CV
 
@@ -123,16 +178,39 @@ shrinking type has not been tailored, it has been compressed.
 
 ## 4. Render and verify
 
+Both backends end in the same place: a PDF **the agent produced**, that the agent then
+inspects. Only the render command differs — the verification below is identical for both,
+run on the final PDF at the end. Never hand a manual export back to the user as the normal
+path; produce the PDF here so the same checks always run.
+
+### Produce the PDF
+
 For `latex`:
 
 ```bash
 pdflatex -interaction=nonstopmode cv.tex && pdflatex -interaction=nonstopmode cv.tex
 ```
 
-Then verify, every time, no exceptions:
+For `html`, render it headlessly — the template's `@media print` block *is* the renderer,
+so the output matches a real Cmd/Ctrl-P export:
 
-- **It compiled clean.** Grep the log for `^!` and for overfull boxes that push into the
-  margin. A PDF that renders despite an error is the common failure, not the rare one.
+```bash
+"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --disable-gpu \
+  --no-pdf-header-footer --print-to-pdf=cv.pdf "file://$PWD/cv.html"
+```
+
+Use whatever Chromium-family binary the machine has (`chromium`, `chrome-headless-shell`).
+Only if none is present, fall back to asking the user to Cmd/Ctrl-P → Save as PDF (Letter/A4,
+margins "Default") and hand the file back — but that is the fallback, not the default.
+
+### The text-layer checks
+
+Run these every time, no exceptions. They read the PDF as data — what the ATS sees — and
+none of them can see the page's layout:
+
+- **It compiled clean** *(latex)*. Grep the log for `^!` and for overfull boxes that push
+  into the margin. A PDF that renders despite an error is the common failure, not the rare
+  one. (The html render has no log; its layout faults surface in the visual pass below.)
 - **Page count.** `pdfinfo cv.pdf | grep Pages` against `guardrails.max_pages`.
 - **The text layer.** `pdftotext cv.pdf - | head -60` must come back in reading order,
   with accents and ligatures intact and no mojibake. This is what the ATS sees; a PDF
@@ -140,9 +218,39 @@ Then verify, every time, no exceptions:
 - **The keyword check.** Confirm the harvested keywords actually appear in the extracted
   text. If a term only exists inside a graphic or a ligature-broken word, it is not there.
 
-For `html`, the export is the user's to run (Cmd/Ctrl-P → Save as PDF, background
-graphics on). Hand them the file and the export settings, then ask for the PDF back so
-the same extraction and page-count checks can run on it.
+### The visual-inspection loop
+
+The checks above pass on a PDF whose text is correct but whose *layout* is broken — a
+heading stranded at the foot of a page, an entry title split from its body, a lake of
+whitespace. The extractor cannot see any of it, so **Read the produced `cv.pdf`** (the file
+tool renders the pages as images) and inspect it against this checklist — the same list for
+either backend:
+
+- **Page count** is within `guardrails.max_pages` — confirm visually, not only via `pdfinfo`.
+- **No orphaned heading.** No section heading or entry heading (latex `\resumeExpHeading` /
+  `\resumeProjectHeading`; html `h2` / `.entry` head) sits alone at the foot of a page with
+  its content pushed to the next.
+- **No split entry.** No role/entry title is separated from the first line of its body.
+- **No isolated heading** left dangling with nothing beneath it.
+- **No large whitespace pool** — no dead band of empty space mid-page or a page ending far
+  short of the others.
+- **No content breaking into the margin** — text or rules running past the text block.
+
+On a defect, apply the **named rescue for the active backend**, then **re-render and Read the
+PDF again**. Fix one defect per pass so each rescue's effect is legible:
+
+- **latex** — from `templates/latex/template-preferences.md` ("Visual-defect rescues"):
+  `\needspace{N\baselineskip}` before an orphaned/isolated/split heading, `\enlargethispage`
+  for a one-or-two-line near-miss overflow, a content cut per the fitting order for a
+  structural overflow or whitespace pool.
+- **html** — from `templates/html/template-preferences.md` ("Print / PDF export"):
+  `break-inside: avoid` / `break-after: avoid` on the block that split, a tweak to the
+  `@media print` sizing for a near-miss overflow, a content cut for a structural one.
+
+**Cap the loop at 3 passes.** If the page is clean, proceed. If defects remain after the
+third pass, **stop** — do not ship silently and do not keep looping. Report the specific
+unresolved defects to the candidate (which heading, which page, what was tried), so they can
+decide between a further content cut and accepting the layout.
 
 Rename the final PDF per `output.filename` in `config.yml`, resolving `<Name>` from
 `knowledge/generated/1-identity-and-constraints.md` and `<Role>` from the JD's title.
@@ -193,7 +301,31 @@ One critique pass, applied, is worth more than three drafts.
 
 ## 7. Write back and record preferences
 
-Both of these, before reporting done:
+All of these, before reporting done:
+
+- **The tracker.** Update `applications/tracker.md`, a single plain-markdown table at the
+  root of `applications/` indexing every application produced. Create it on first use if
+  absent, with this header:
+
+  ```markdown
+  # Applications
+
+  | Date | Company | Role | Fit | Link |
+  | --- | --- | --- | --- | --- |
+  ```
+
+  Then add exactly one row for this application:
+  - **Date** — month of application, the `<YYYY-MM>` from the folder name.
+  - **Company** / **Role** — as on the application.
+  - **Fit** — the overall `/100` score plus its verdict tier from `notes.md` (e.g.
+    `78/100 — strong`). If no fit score was computed, leave the cell blank rather than
+    inventing one.
+  - **Link** — a relative markdown link to the application folder, e.g.
+    `[folder](2026-07-acme-ml-engineer/)`.
+
+  The folder path is the key: if a row for this application's folder already exists (a
+  re-run), update that row in place — never append a duplicate. This is a pure index —
+  no status/outcome column and no calibration; do not add columns beyond the five above.
 
 - **New facts** surfaced in this application — anything the user said while filling a gap
   — go into the right `knowledge/generated/` file, per `auto_write_back_to_knowledge` in
@@ -214,16 +346,17 @@ Both of these, before reporting done:
 ## 8. Report
 
 Short. What was produced and where, the drafting language, the fit summary in a line or
-two, any requirement still unevidenced, and the files updated in `knowledge/` and
-`templates/`. Offer the next move — revise a section, adjust the angle, or a mock screen
-against this JD — rather than declaring the application finished.
+two, any requirement still unevidenced, the row added to `applications/tracker.md`, and
+the files updated in `knowledge/` and `templates/`. Offer the next move — revise a
+section, adjust the angle, or a mock screen against this JD — rather than declaring the
+application finished.
 
 ## Application folder, when done
 
 ```
 applications/2026-07-acme-ml-engineer/
   jd.md              # the posting, verbatim, with capture metadata
-  notes.md           # ranked requirements, evidence map, keywords, angle, cuts and softenings
+  notes.md           # ranked requirements, evidence map, keywords, angle, fit score
   cv.tex             # source, so the next revision is an edit not a rewrite
   CV_<Name>_<Role>.pdf
   cover-letter.tex
@@ -231,3 +364,6 @@ applications/2026-07-acme-ml-engineer/
   CoverLetter_<Name>_<Role>.pdf
   review.md          # the recruiter critique and what was done about it
 ```
+
+Alongside the per-application folders, `applications/tracker.md` is a single index table
+spanning every application — one row each, maintained by step 7.

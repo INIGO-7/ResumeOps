@@ -13,6 +13,16 @@ Nothing here is written from scratch. Every line is a **selection** from `knowle
 framed in the JD's vocabulary. If a claim cannot be traced to `knowledge/`, it does not go
 on the page — it becomes a question for the user.
 
+**Ask only what is genuinely missing.** The knowledge store is built to hold enough
+context to draft near-perfectly from scratch — the CV *and* the cover letter. So at every
+stage, infer from the JD, `knowledge/generated/`, and the candidate's recorded motivation
+before putting a question to the user, and ask only for what truly cannot be inferred.
+No fixed questionnaires, no optional nice-to-have prompts: each interruption has to earn
+its place. The one question the letter reliably needs — the "why this company" hook — is
+the exception, and even it is skipped when the store already answers it. This stance
+governs the whole pipeline, not just the cover letter; it is why gap questions in step 2
+come as a single batch and why step 5 asks at most one thing.
+
 Read before starting, in this order: `config.yml`, `CLAUDE.md`,
 `templates/master-template-preferences.md`, `templates/cover-letter-preferences.md`, and
 the `template-preferences.md` of the backend in `drafting.default_template`.
@@ -262,18 +272,31 @@ Per `drafting.cover_letter` in `config.yml` (`always` / `ask` / `never`). Draft 
 the CV, never before: the letter's proof paragraph should tell the story behind a bullet
 the CV already carries.
 
-Follow `templates/cover-letter-preferences.md` for structure and voice, and render with
-`templates/latex/cover-letter-template.tex` into `cover-letter.tex` →
-`output.cover_letter_filename`. Same verification as the CV: clean compile, one page,
-clean extraction. Only the `latex` backend has a cover letter template — if the CV was
-rendered through `html`, say so and render the letter through LaTeX rather than
-improvising a layout.
+**Infer the angle; do not interrogate for it.** The letter's shape — why the candidate
+wants this role, which of the JD's problems they speak to, the approach they would bring,
+and the tone — is inferred, not elicited. Read it off the JD, the evidence map already in
+`notes.md`, and the candidate's recorded motivation and goals in
+`knowledge/generated/10-career-narrative.md`. Per the apply-stage principle above, that
+store exists so the letter can be drafted near-perfectly from scratch; a four-question
+"why / problems / approach / tone" questionnaire is exactly what it replaces.
 
-The "why this company" paragraph is the one that cannot be generated from `knowledge/`
-alone. Ask the user what draws them to this company before writing it — a single question
-gets a more genuine paragraph than any amount of inference from the JD. If they have
-nothing specific, keep the paragraph short and about the work rather than manufacturing
-admiration.
+**Ask only the "why this company" hook, and only when the store cannot answer it.** What
+genuinely draws this candidate to this company is the one thing the JD cannot supply — a
+single honest question gets a more genuine paragraph than any inference. Ask it, and
+nothing else: no optional, nice-to-have prompts at this stage. If `10-career-narrative.md`
+(or something the user already said in this application) records what pulls them to this
+company or this kind of company, use that and skip the question. If they have nothing
+specific, keep the paragraph short and about the work rather than manufacturing admiration.
+
+Follow `templates/cover-letter-preferences.md` for structure and voice, and the Tier-1
+anti-slop rule in `master-template-preferences.md`, which binds the letter exactly as it
+binds the CV. Render with `templates/latex/cover-letter-template.tex` into
+`cover-letter.tex` → `output.cover_letter_filename`, **straight to PDF — there is no
+draft-in-chat approval gate.** The candidate reviews the finished PDF and asks for changes
+on the real document, not on a pasted draft. Same verification as the CV: clean compile,
+one page, clean extraction. Only the `latex` backend has a cover letter template — if the
+CV was rendered through `html`, say so and render the letter through LaTeX rather than
+improvising a layout.
 
 Also produce a **plain-text version** of the letter body in `cover-letter.md` — most
 application forms take a text box, not an attachment, and reformatting a PDF by hand at
